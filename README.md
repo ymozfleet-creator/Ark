@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARK INC. | 世代の壁を超えてゆけ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* クールな印象を与えるサンセリフ体（ゴシック系）をインポート */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Inter:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        
+        body { 
+            /* 全体をモダンなサンセリフ体に統一 */
+            font-family: 'Inter', 'Noto Sans JP', sans-serif; 
+            background-color: #ffffff; 
+            color: #000000; 
+            line-height: 2.2;
+            overflow-x: hidden;
+        }
+
+        /* MESSAGE本文のカスタマイズ：クールな細字・広めの字間 */
+        .message-text-style {
+            font-weight: 300; /* 細身のウェイトで洗練さを演出 */
+            letter-spacing: 0.12em; /* 字間を広げて「間」をデザイン */
+            color: #1a1a1a;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.3em;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-space { padding: 140px 24px; }
+        html { scroll-behavior: smooth; }
+
+        .title-underline {
+            width: 24px;
+            height: 1px;
+            background-color: #000;
+            margin: 16px auto 0;
+        }
+
+        .profile-label-border {
+            border-bottom: 1px solid #000;
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 2px;
+        }
+
+        .form-input {
+            border: 1px solid #e5e7eb;
+            background-color: #fcfcfc;
+            border-radius: 4px;
+            padding: 14px 16px;
+            width: 100%;
+        }
+
+        /* 背景画像 */
+        .bg-consulting { background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://picsum.photos/id/447/800/600'); }
+        .bg-application { background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://picsum.photos/id/160/800/600'); }
+        .bg-seminar { background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('https://picsum.photos/id/367/800/600'); }
+        .service-card-bg { background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="fixed top-0 w-full z-50 px-10 py-8 flex justify-between items-center bg-white/90 backdrop-blur-md">
+        <h1 class="text-sm font-black tracking-[0.4em] uppercase font-[Montserrat]">Ark inc.</h1>
+        <nav class="hidden md:flex space-x-12 text-[10px] tracking-[0.2em] uppercase font-bold font-[Montserrat]">
+            <a href="#message" class="hover:opacity-50 transition">Message</a>
+            <a href="#services" class="hover:opacity-50 transition">Service</a>
+            <a href="#profile" class="hover:opacity-50 transition">Company</a>
+            <a href="#contact" class="hover:opacity-50 transition">Contact</a>
+        </nav>
+    </header>
+
+    <section class="h-screen flex flex-col justify-center items-center">
+        <h2 class="text-4xl md:text-6xl font-bold tracking-tighter reveal font-[Montserrat]">
+            世代の壁を超えてゆけ
+        </h2>
+    </section>
+
+    <section id="message" class="section-space">
+        <div class="container mx-auto max-w-5xl px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl section-title">MESSAGE</h2>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="space-y-16 text-center text-base md:text-lg message-text-style">
+                <p class="reveal">
+                    誰もが持つ、あの時、あの場所で得た唯一無二の経験には、<br class="hidden md:block">
+                    必ず誰かの未来を照らすチカラが宿っていると、<br class="hidden md:block">
+                    私たちは信じています。
+                </p>
+                <p class="reveal">
+                    その貴重な経験が時間や場所の制約を超え、<br class="hidden md:block">
+                    次世代へと繋がる懸け橋となることが、私たちの使命です。
+                </p>
+                <p class="reveal">
+                    あなたの情熱とノウハウが、未来の可能性を開く羅針盤となるよう、<br class="hidden md:block">
+                    私たちは常に寄り添い、その継承の未来を、支え続けます。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-space bg-zinc-50/50">
+        <div class="container mx-auto max-w-6xl px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl section-title">SERVICE</h2>
+                <div class="title-underline"></div>
+                <p class="mt-12 text-sm text-gray-600 tracking-widest font-light">我々は総合コンサルティング事業者として、幅広い活動を実施しております。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="relative group aspect-[4/3] service-card-bg bg-application reveal">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-white/95 px-5 py-3 shadow-sm">
+                            <h3 class="text-[11px] font-bold tracking-widest">アプリケーション開発・運営事業</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group aspect-[4/3] service-card-bg bg-consulting reveal" style="transition-delay: 0.1s;">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-white/95 px-8 py-3 shadow-sm">
+                            <h3 class="text-[11px] font-bold tracking-widest">コンサルティング事業</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group aspect-[4/3] service-card-bg bg-seminar reveal" style="transition-delay: 0.2s;">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="bg-white/95 px-10 py-3 shadow-sm">
+                            <h3 class="text-[11px] font-bold tracking-widest">セミナー事業</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="profile" class="section-space">
+        <div class="container mx-auto max-w-4xl px-6">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-3xl section-title">COMPANY</h2>
+                <div class="title-underline"></div>
+            </div>
+            
+            <div class="max-w-2xl mx-auto space-y-12 text-[13px] tracking-widest">
+                <div class="flex items-start reveal">
+                    <div class="w-32 md:w-48 pr-4 font-bold profile-label-border">会社名</div>
+                    <div class="flex-1 pl-4 font-medium uppercase">Ark inc.</div>
+                </div>
+                <div class="flex items-start reveal">
+                    <div class="w-32 md:w-48 pr-4 font-bold profile-label-border">所在地</div>
+                    <div class="flex-1 pl-4 font-medium">〒165-0023<br>東京都中野区江原町2-13-13</div>
+                </div>
+                <div class="flex items-start reveal">
+                    <div class="w-32 md:w-48 pr-4 font-bold profile-label-border">代表取締役</div>
+                    <div class="pl-4 font-medium">茂住 雄太</div>
+                </div>
+                <div class="flex items-start reveal">
+                    <div class="w-32 md:w-48 pr-4 font-bold profile-label-border">設立日</div>
+                    <div class="pl-4 font-medium">2025年11月</div>
+                </div>
+                <div class="flex items-start reveal">
+                    <div class="w-32 md:w-48 pr-4 font-bold profile-label-border">事業内容</div>
+                    <div class="pl-4 font-medium space-y-2 font-light">
+                        <p>コンサルティング事業</p>
+                        <p>アプリ開発・運営事業</p>
+                        <p>セミナー事業</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-space bg-zinc-50/50">
+        <div class="container mx-auto max-w-2xl px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl section-title">CONTACT</h2>
+                <div class="title-underline mb-12"></div>
+                <p class="text-[12px] tracking-widest leading-loose text-gray-500 font-light">
+                    お問い合わせ、お見積もりはこちらのフォームよりご連絡ください。
+                </p>
+            </div>
+
+            <form action="mailto:kanri@mycoach-myteam.com" method="post" enctype="text/plain" class="space-y-8 reveal">
+                <div><label class="text-[11px] font-bold mb-3 block font-[Montserrat] tracking-widest uppercase">Name</label><input type="text" name="name" class="form-input" placeholder="田中太郎" required></div>
+                <div><label class="text-[11px] font-bold mb-3 block font-[Montserrat] tracking-widest uppercase">Email</label><input type="email" name="email" class="form-input" placeholder="info@example.com" required></div>
+                <div><label class="text-[11px] font-bold mb-3 block font-[Montserrat] tracking-widest uppercase">Message</label><textarea name="message" rows="6" class="form-input" placeholder="内容をご入力ください" required></textarea></div>
+                <div class="flex items-center space-x-3"><input type="checkbox" id="privacy" class="w-4 h-4" required><label for="privacy" class="text-[12px] font-light cursor-pointer">プライバシーポリシーに同意する</label></div>
+                <div class="text-center pt-8">
+                    <button type="submit" class="bg-black text-white px-16 py-4 text-[10px] font-bold tracking-[0.4em] font-[Montserrat] hover:bg-zinc-800 transition uppercase">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center text-gray-400 border-t border-gray-100">
+        <p class="text-[9px] tracking-[0.4em] uppercase font-[Montserrat]">© 2026 Ark inc. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
