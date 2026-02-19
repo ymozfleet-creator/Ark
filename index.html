@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARK INC. | 世代の壁を超えてゆけ</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@400;700;900&family=Noto+Serif+JP:wght@200;300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@400;700;900&family=Noto+Serif+JP:wght@200;300;400&display=swap" rel="stylesheet">
     <style>
         :root {
             --black: #080808;
             --white: #f5f4f2;
             --gray: #888;
-            --line: rgba(255,255,255,0.1);
-            --line-dark: rgba(0,0,0,0.1);
+            --line-w: rgba(255,255,255,0.1);
+            --line-b: rgba(0,0,0,0.1);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,13 +19,22 @@
 
         body {
             font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
-            background-color: var(--white);
+            background: var(--white);
             color: var(--black);
             overflow-x: hidden;
             cursor: none;
         }
 
-        /* ── Cursor ── */
+        /* ─── Grain overlay ─── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 9990;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: .022;
+            pointer-events: none;
+        }
+
+        /* ─── Custom cursor ─── */
         #cur, #cur-ring {
             position: fixed;
             border-radius: 50%;
@@ -34,160 +42,111 @@
             z-index: 9999;
             transform: translate(-50%,-50%);
         }
-        #cur {
-            width: 7px; height: 7px;
-            background: #fff;
-            mix-blend-mode: difference;
-            transition: width .25s, height .25s;
-        }
-        #cur-ring {
-            width: 34px; height: 34px;
-            border: 1px solid rgba(255,255,255,0.45);
-            mix-blend-mode: difference;
-            transition: width .3s, height .3s;
-        }
+        #cur { width: 7px; height: 7px; background: #fff; mix-blend-mode: difference; transition: width .25s, height .25s; }
+        #cur-ring { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.45); mix-blend-mode: difference; transition: width .3s, height .3s; }
         .cursor-grow #cur { width: 12px; height: 12px; }
         .cursor-grow #cur-ring { width: 56px; height: 56px; }
 
-        /* ── Header ── */
+        /* ─── Header ─── */
         header {
-            position: fixed; top: 0; left: 0; right: 0;
-            z-index: 200;
+            position: fixed; top: 0; left: 0; right: 0; z-index: 200;
             padding: 28px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             transition: background .5s, border-color .5s;
         }
-        header.bg {
-            background: rgba(8,8,8,0.93);
-            border-bottom: 1px solid var(--line);
+        header.scrolled {
+            background: rgba(8,8,8,.93);
+            border-bottom: 1px solid var(--line-w);
             backdrop-filter: blur(14px);
         }
         .logo {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 10px;
-            letter-spacing: .5em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: #fff;
+            font-weight: 900; font-size: 10px;
+            letter-spacing: .5em; text-transform: uppercase;
+            text-decoration: none; color: #fff;
         }
         nav { display: flex; gap: 44px; }
         nav a {
             font-family: 'Montserrat', sans-serif;
-            font-size: 8.5px;
-            letter-spacing: .25em;
-            text-transform: uppercase;
-            text-decoration: none;
-            color: rgba(255,255,255,.6);
-            position: relative;
-            transition: color .3s;
+            font-size: 8.5px; letter-spacing: .25em; text-transform: uppercase;
+            text-decoration: none; color: rgba(255,255,255,.6);
+            position: relative; transition: color .3s;
         }
         nav a:hover { color: #fff; }
         nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px; left: 0;
-            width: 0; height: 1px;
-            background: #fff;
-            transition: width .4s ease;
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 1px; background: #fff; transition: width .4s;
         }
         nav a:hover::after { width: 100%; }
 
-        /* ── Hero ── */
+        /* ─── Hero ─── */
         .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 0 70px;
-            overflow: hidden;
-            background: var(--black);
+            position: relative; height: 100vh;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: flex-start;
+            padding: 0 70px; overflow: hidden; background: var(--black);
         }
-
-        .hero-bg {
-            position: absolute; inset: 0; z-index: 0;
-        }
-        /* Noah's Ark — dramatic stormy sea / mountain scene */
+        .hero-bg { position: absolute; inset: 0; z-index: 0; }
         .hero-bg img {
-            width: 100%; height: 100%;
-            object-fit: cover;
+            width: 100%; height: 100%; object-fit: cover;
             object-position: center 40%;
             filter: grayscale(100%) brightness(0.32) contrast(1.15);
-            transition: opacity 1.8s ease;
+            opacity: 0; transition: opacity 2s ease;
         }
+        .hero-bg img.loaded { opacity: 1; }
         .hero-overlay {
             position: absolute; inset: 0; z-index: 1;
             background: linear-gradient(160deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,.15) 70%);
         }
-
         .hero-content { position: relative; z-index: 2; }
 
+        @keyframes upIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
         .hero-label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 8px;
-            letter-spacing: .5em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.38);
-            margin-bottom: 20px;
-            opacity: 0;
-            animation: upIn .9s ease .4s forwards;
+            font-family: 'Noto Serif JP', serif; font-size: 11px;
+            letter-spacing: .35em;
+            color: rgba(255,255,255,.38); margin-bottom: 20px;
+            opacity: 0; animation: upIn .9s ease .4s forwards;
         }
-
-        /* タイトルは改行なしで一文に */
         .hero-title {
-            font-size: clamp(36px, 6vw, 82px);
-            font-weight: 300;
-            line-height: 1.2;
-            letter-spacing: .1em;
-            color: #fff;
+            font-size: clamp(36px, 6vw, 82px); font-weight: 300;
+            line-height: 1.2; letter-spacing: .1em; color: #fff;
             white-space: nowrap;
-            opacity: 0;
-            animation: upIn 1.1s ease .65s forwards;
+            opacity: 0; animation: upIn 1.1s ease .65s forwards;
         }
-        .hero-title em { font-style: italic; }
-
-        .hero-rule {
-            width: 48px; height: 1px;
-            background: rgba(255,255,255,.45);
-            margin-top: 32px;
-            opacity: 0;
-            animation: upIn .8s ease 1s forwards;
-        }
-
         .hero-subcopy {
-            font-size: clamp(12px, 1.4vw, 16px);
-            font-weight: 300;
-            line-height: 2;
-            letter-spacing: .12em;
-            color: rgba(255,255,255,.55);
-            margin-top: 20px;
-            opacity: 0;
-            animation: upIn .8s ease .85s forwards;
+            font-size: clamp(12px, 1.4vw, 16px); font-weight: 300;
+            line-height: 2; letter-spacing: .12em;
+            color: rgba(255,255,255,.55); margin-top: 20px;
+            opacity: 0; animation: upIn .8s ease .85s forwards;
         }
-
+        .hero-tagline {
+            font-family: 'Noto Serif JP', serif;
+            font-size: clamp(10px, 1.1vw, 13px); font-weight: 300;
+            letter-spacing: .18em; color: rgba(255,255,255,.35);
+            margin-top: 20px;
+            opacity: 0; animation: upIn .8s ease 1.05s forwards;
+        }
+        .hero-rule {
+            width: 48px; height: 1px; background: rgba(255,255,255,.45);
+            margin-top: 32px;
+            opacity: 0; animation: upIn .8s ease 1s forwards;
+        }
         .scroll-cue {
-            position: absolute;
-            bottom: 44px; left: 70px;
-            z-index: 2;
+            position: absolute; bottom: 44px; left: 70px; z-index: 2;
             display: flex; align-items: center; gap: 14px;
-            opacity: 0;
-            animation: upIn .8s ease 1.4s forwards;
+            opacity: 0; animation: upIn .8s ease 1.4s forwards;
         }
         .scroll-cue span {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 7.5px;
-            letter-spacing: .4em;
-            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif; font-size: 7.5px;
+            letter-spacing: .4em; text-transform: uppercase;
             color: rgba(255,255,255,.38);
         }
         .scroll-line-wrap { width: 48px; overflow: hidden; }
         .scroll-line {
-            width: 48px; height: 1px;
-            background: rgba(255,255,255,.35);
+            width: 48px; height: 1px; background: rgba(255,255,255,.35);
             animation: scrollSlide 2.4s ease-in-out infinite;
         }
         @keyframes scrollSlide {
@@ -197,478 +156,261 @@
             100% { transform: scaleX(0); transform-origin: right; opacity: 0; }
         }
 
-        @keyframes upIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── Shared section styles ── */
-        .sec-pad {
-            padding: 140px 70px;
-            max-width: 1160px;
-            margin: 0 auto;
-        }
+        /* ─── Shared ─── */
+        .sec-pad { padding: 140px 70px; max-width: 1160px; margin: 0 auto; }
 
         .sec-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 8px;
-            letter-spacing: .45em;
-            text-transform: uppercase;
-            color: var(--gray);
-            margin-bottom: 60px;
+            display: inline-flex; align-items: center; gap: 14px;
+            font-family: 'Montserrat', sans-serif; font-size: 8px;
+            letter-spacing: .45em; text-transform: uppercase;
+            color: var(--gray); margin-bottom: 60px;
         }
-        .sec-label::before {
-            content: '';
-            display: block;
-            width: 36px; height: 1px;
-            background: currentColor;
-        }
+        .sec-label::before { content: ''; display: block; width: 36px; height: 1px; background: currentColor; }
 
-        .reveal {
-            opacity: 0;
-            transform: translateY(26px);
-            transition: opacity 1.1s cubic-bezier(.16,1,.3,1),
-                        transform 1.1s cubic-bezier(.16,1,.3,1);
-        }
+        .reveal { opacity: 0; transform: translateY(26px); transition: opacity 1.1s cubic-bezier(.16,1,.3,1), transform 1.1s cubic-bezier(.16,1,.3,1); }
         .reveal.on { opacity: 1; transform: none; }
 
-        /* ── Message ── */
+        /* ─── Message ─── */
         #message { background: var(--white); }
-
         .msg-heading {
-            font-size: clamp(26px, 4vw, 56px);
-            font-weight: 300;
-            line-height: 1.3;
-            letter-spacing: .08em;
-            white-space: nowrap;
-            margin-bottom: 56px;
-            text-align: center;
+            font-size: clamp(26px, 4vw, 56px); font-weight: 300;
+            line-height: 1.3; letter-spacing: .08em;
+            white-space: nowrap; margin-bottom: 56px; text-align: center;
         }
-        .msg-heading em { font-style: italic; }
-
         .msg-body {
-            font-size: 15px;
-            font-weight: 300;
-            line-height: 2.5;
-            letter-spacing: .1em;
-            color: #444;
-            text-align: center;
-        }
-        .msg-body--full {
-            max-width: 780px;
-            margin: 0 auto;
+            font-size: 15px; font-weight: 300; line-height: 2.5;
+            letter-spacing: .1em; color: #444;
+            text-align: center; max-width: 780px; margin: 0 auto;
         }
         .msg-body p + p { margin-top: 32px; }
+        .msg-sep { width: 100%; height: 1px; background: var(--line-b); margin: 32px 0; }
 
-        .msg-sep {
-            width: 100%; height: 1px;
-            background: var(--line-dark);
-            margin: 32px 0;
-        }
-
-        /* ── Services ── */
+        /* ─── Services ─── */
         #services { background: var(--black); color: #fff; }
         #services .sec-label { color: rgba(255,255,255,.3); }
 
         .svc-intro {
             max-width: 560px;
-            font-size: clamp(22px, 2.8vw, 38px);
-            font-weight: 300;
-            line-height: 1.6;
-            letter-spacing: .06em;
-            color: #fff;
+            font-size: clamp(22px, 2.8vw, 38px); font-weight: 300;
+            line-height: 1.6; letter-spacing: .06em; color: #fff;
             margin-bottom: 72px;
         }
-        .svc-intro em { font-style: italic; color: rgba(255,255,255,.45); }
 
         .svc-list { display: flex; flex-direction: column; }
-
         .svc-item {
-            border-top: 1px solid var(--line);
-            display: grid;
-            grid-template-columns: 72px 1fr 52px;
-            gap: 36px;
-            align-items: center;
-            padding: 36px 0;
-            cursor: pointer;
+            border-top: 1px solid var(--line-w);
+            display: grid; grid-template-columns: 72px 1fr 52px;
+            gap: 36px; align-items: center;
+            padding: 36px 0; cursor: pointer;
         }
-        .svc-item:last-child { border-bottom: 1px solid var(--line); }
-
+        .svc-item:last-child { border-bottom: 1px solid var(--line-w); }
         .svc-num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 12px;
-            letter-spacing: .2em;
-            color: rgba(255,255,255,.3);
+            font-size: 12px; letter-spacing: .2em; color: rgba(255,255,255,.3);
         }
-
         .svc-name {
-            font-size: clamp(16px, 2vw, 26px);
-            font-weight: 300;
-            letter-spacing: .08em;
-            color: #fff;
-            transition: letter-spacing .4s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            font-size: clamp(16px, 2vw, 26px); font-weight: 300;
+            letter-spacing: .08em; color: #fff;
+            display: flex; flex-direction: column; gap: 6px;
+            transition: letter-spacing .4s;
         }
-
         .svc-catch {
-            font-size: 11px;
-            font-weight: 300;
-            letter-spacing: .1em;
-            color: rgba(255,255,255,.38);
-            line-height: 1.6;
+            font-size: 11px; font-weight: 300;
+            letter-spacing: .1em; color: rgba(255,255,255,.38); line-height: 1.6;
         }
-
         .svc-arrow {
             width: 44px; height: 44px;
-            border: 1px solid rgba(255,255,255,.15);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255,255,255,.4);
-            font-size: 20px;
-            transition: all .4s ease;
-            flex-shrink: 0;
+            border: 1px solid rgba(255,255,255,.15); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,.4); font-size: 20px;
+            transition: all .4s; flex-shrink: 0;
         }
-
         .svc-item:hover .svc-name { letter-spacing: .14em; }
-        .svc-item:hover .svc-arrow {
-            background: #fff;
-            color: var(--black);
-            border-color: #fff;
-            transform: rotate(45deg);
-        }
+        .svc-item:hover .svc-arrow { background: #fff; color: var(--black); border-color: #fff; transform: rotate(45deg); }
 
-        /* ── Service Detail Overlay ── */
+        /* ─── Service Overlay ─── */
         .svc-overlay {
-            position: fixed; inset: 0;
-            z-index: 500;
-            background: var(--white);
-            display: flex;
-            flex-direction: column;
-            transform: translateX(100%);
-            transition: transform .7s cubic-bezier(.77,0,.18,1);
+            position: fixed; inset: 0; z-index: 500;
+            background: var(--white); display: flex; flex-direction: column;
+            transform: translateX(100%); transition: transform .7s cubic-bezier(.77,0,.18,1);
             overflow-y: auto;
         }
         .svc-overlay.open { transform: translateX(0); }
 
         .ov-header {
-            padding: 32px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--line-dark);
-            position: sticky; top: 0;
-            background: var(--white);
-            z-index: 10;
+            padding: 32px 60px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--line-b);
+            position: sticky; top: 0; background: var(--white); z-index: 10;
         }
-        .ov-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 10px;
-            letter-spacing: .5em;
-            color: var(--black);
-        }
+        .ov-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 10px; letter-spacing: .5em; color: var(--black); }
         .ov-close {
-            width: 44px; height: 44px;
-            border: 1px solid var(--line-dark);
-            border-radius: 50%;
-            background: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: var(--black);
-            transition: all .3s;
-            line-height: 1;
+            width: 44px; height: 44px; border: 1px solid var(--line-b);
+            border-radius: 50%; background: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: var(--black); transition: all .3s; line-height: 1;
         }
         .ov-close:hover { background: var(--black); color: #fff; }
 
-        .ov-img-wrap {
-            position: relative;
-            height: 50vh;
-            overflow: hidden;
-            background: #111;
-            flex-shrink: 0;
-        }
-        .ov-img-wrap img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.45);
-        }
+        .ov-img-wrap { position: relative; height: 50vh; overflow: hidden; background: #111; flex-shrink: 0; }
+        .ov-img-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) brightness(0.45); }
         .ov-img-overlay {
             position: absolute; inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+            display: flex; flex-direction: column; justify-content: flex-end;
             padding: 56px 60px;
             background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 55%);
         }
-        .ov-num {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 8.5px;
-            letter-spacing: .4em;
-            color: rgba(255,255,255,.5);
-            margin-bottom: 10px;
-        }
-        .ov-title {
-            font-size: clamp(22px, 3.5vw, 50px);
-            font-weight: 300;
-            letter-spacing: .1em;
-            color: #fff;
-            line-height: 1.3;
-        }
+        .ov-num { font-family: 'Montserrat', sans-serif; font-size: 8.5px; letter-spacing: .4em; color: rgba(255,255,255,.5); margin-bottom: 10px; }
+        .ov-title { font-size: clamp(22px, 3.5vw, 50px); font-weight: 300; letter-spacing: .1em; color: #fff; line-height: 1.3; }
 
-        .ov-body {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 80px;
-            padding: 80px 60px;
-        }
-
-        .ov-sub {
-            font-size: clamp(16px, 1.8vw, 24px);
-            font-weight: 300;
-            letter-spacing: .06em;
-            line-height: 1.7;
-            position: sticky;
-            top: 110px;
-        }
+        .ov-body { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; padding: 80px 60px; }
+        .ov-sub { font-size: clamp(16px, 1.8vw, 24px); font-weight: 300; letter-spacing: .06em; line-height: 1.7; position: sticky; top: 110px; }
         .ov-sub em { font-style: italic; }
-
-        .ov-desc {
-            font-size: 14px;
-            font-weight: 300;
-            line-height: 2.4;
-            letter-spacing: .08em;
-            color: #444;
-        }
+        .ov-desc { font-size: 14px; font-weight: 300; line-height: 2.4; letter-spacing: .08em; color: #444; }
         .ov-desc p + p { margin-top: 24px; }
+        .ov-points { margin-top: 44px; display: flex; flex-direction: column; }
+        .ov-point { display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-top: 1px solid var(--line-b); }
+        .ov-point:last-child { border-bottom: 1px solid var(--line-b); }
+        .ov-point-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--black); margin-top: 7px; flex-shrink: 0; }
+        .ov-point-body strong { display: block; font-size: 13px; letter-spacing: .1em; margin-bottom: 4px; }
+        .ov-point-body span { font-size: 12.5px; color: var(--gray); line-height: 1.9; letter-spacing: .05em; font-weight: 300; }
 
-        .ov-points {
-            margin-top: 44px;
-            display: flex;
-            flex-direction: column;
-        }
-        .ov-point {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            padding: 20px 0;
-            border-top: 1px solid var(--line-dark);
-        }
-        .ov-point:last-child { border-bottom: 1px solid var(--line-dark); }
-        .ov-point-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: var(--black);
-            margin-top: 7px;
-            flex-shrink: 0;
-        }
-        .ov-point-body strong {
-            display: block;
-            font-size: 13px;
-            letter-spacing: .1em;
-            margin-bottom: 4px;
-        }
-        .ov-point-body span {
-            font-size: 12.5px;
-            color: var(--gray);
-            line-height: 1.9;
-            letter-spacing: .05em;
-            font-weight: 300;
-        }
-
-        /* ── Company ── */
+        /* ─── Company ─── */
         #profile { background: var(--white); }
-
-        .co-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.3fr;
-            gap: 100px;
-            align-items: start;
-        }
-
-        .co-heading {
-            font-size: clamp(26px, 3.2vw, 46px);
-            font-weight: 300;
-            letter-spacing: .06em;
-            line-height: 1.5;
-            position: sticky;
-            top: 130px;
-        }
+        .co-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 100px; align-items: start; }
+        .co-heading { font-size: clamp(26px, 3.2vw, 46px); font-weight: 300; letter-spacing: .06em; line-height: 1.5; position: sticky; top: 130px; }
         .co-heading em { font-style: italic; }
-
-        .co-desc {
-            font-size: 13px;
-            font-weight: 300;
-            line-height: 2.2;
-            letter-spacing: .08em;
-            color: var(--gray);
-            margin-top: 20px;
-        }
-
+        .co-desc { font-size: 13px; font-weight: 300; line-height: 2.2; letter-spacing: .08em; color: var(--gray); margin-top: 20px; }
         .co-table { display: flex; flex-direction: column; }
-
         .co-row {
-            display: grid;
-            grid-template-columns: 130px 1fr;
-            gap: 20px;
-            padding: 22px 0;
-            border-bottom: 1px solid var(--line-dark);
-            opacity: 0;
-            transform: translateX(14px);
-            transition: opacity .9s cubic-bezier(.16,1,.3,1),
-                        transform .9s cubic-bezier(.16,1,.3,1);
+            display: grid; grid-template-columns: 130px 1fr; gap: 20px;
+            padding: 22px 0; border-bottom: 1px solid var(--line-b);
+            opacity: 0; transform: translateX(14px);
+            transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
         }
         .co-row.on { opacity: 1; transform: none; }
-
         .co-key {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 7.5px;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: var(--gray);
-            padding-top: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
+            font-family: 'Montserrat', sans-serif; font-size: 7.5px;
+            letter-spacing: .3em; text-transform: uppercase; color: var(--gray);
+            padding-top: 4px; display: flex; flex-direction: column; gap: 3px;
         }
+        .co-key-ja { font-family: 'Noto Serif JP', serif; font-size: 10px; letter-spacing: .12em; text-transform: none; color: var(--black); font-weight: 400; }
+        .co-val { font-size: 14px; font-weight: 300; letter-spacing: .1em; line-height: 2; }
 
-        .co-key-ja {
-            font-family: 'Noto Serif JP', serif;
-            font-size: 10px;
-            letter-spacing: .12em;
-            text-transform: none;
-            color: var(--black);
-            font-weight: 400;
-        }
-        .co-val {
-            font-size: 14px;
-            font-weight: 300;
-            letter-spacing: .1em;
-            line-height: 2;
-        }
-
-        /* ── Contact ── */
-        #contact {
-            background: var(--black);
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
+        /* ─── Contact ─── */
+        #contact { background: var(--black); color: #fff; position: relative; overflow: hidden; }
         .contact-bg {
-            position: absolute;
-            right: -60px; bottom: -60px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: clamp(100px, 16vw, 210px);
-            color: transparent;
+            position: absolute; right: -60px; bottom: -60px;
+            font-family: 'Montserrat', sans-serif; font-weight: 900;
+            font-size: clamp(100px, 16vw, 210px); color: transparent;
             -webkit-text-stroke: 1px rgba(255,255,255,.04);
-            pointer-events: none;
-            user-select: none;
-            letter-spacing: -.05em;
-            line-height: 1;
+            pointer-events: none; user-select: none; letter-spacing: -.05em; line-height: 1;
         }
-
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-        }
-
-        .contact-head {
-            font-size: clamp(30px, 4.2vw, 60px);
-            font-weight: 300;
-            line-height: 1.3;
-            letter-spacing: .06em;
-        }
-        .contact-head em {
-            font-style: italic;
-            color: rgba(255,255,255,.4);
-        }
-
-        .contact-sub {
-            font-size: 13px;
-            font-weight: 300;
-            line-height: 2.2;
-            letter-spacing: .08em;
-            color: rgba(255,255,255,.38);
-            margin-top: 20px;
-        }
-
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .contact-head { font-size: clamp(30px, 4.2vw, 60px); font-weight: 300; line-height: 1.3; letter-spacing: .06em; }
+        .contact-head em { font-style: italic; color: rgba(255,255,255,.4); }
+        .contact-sub { font-size: 13px; font-weight: 300; line-height: 2.2; letter-spacing: .08em; color: rgba(255,255,255,.38); margin-top: 20px; }
         .contact-email {
-            display: block;
-            font-size: clamp(12px, 1.5vw, 17px);
-            font-weight: 300;
-            letter-spacing: .05em;
-            color: #fff;
-            text-decoration: none;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255,255,255,.18);
-            transition: border-color .3s;
-            word-break: break-all;
+            display: block; font-size: clamp(12px, 1.5vw, 17px); font-weight: 300;
+            letter-spacing: .05em; color: #fff; text-decoration: none;
+            padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,.18);
+            transition: border-color .3s; word-break: break-all;
         }
         .contact-email:hover { border-color: rgba(255,255,255,.55); }
-
         .contact-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 30px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 8.5px;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.5);
-            text-decoration: none;
-            transition: color .3s, gap .3s;
+            display: inline-flex; align-items: center; gap: 12px; margin-top: 30px;
+            font-family: 'Montserrat', sans-serif; font-size: 8.5px;
+            letter-spacing: .3em; text-transform: uppercase;
+            color: rgba(255,255,255,.5); text-decoration: none; transition: color .3s, gap .3s;
         }
         .contact-btn:hover { color: #fff; gap: 20px; }
         .contact-btn::after { content: '→'; font-size: 14px; }
 
-        /* ── Footer ── */
+        /* ─── Footer ─── */
         footer {
-            background: var(--black);
-            border-top: 1px solid var(--line);
-            padding: 34px 70px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--black); border-top: 1px solid var(--line-w);
+            padding: 34px 70px; display: flex; justify-content: space-between; align-items: center;
         }
-        .ft-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 9px;
-            letter-spacing: .45em;
-            color: rgba(255,255,255,.28);
-        }
-        .ft-copy {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 7.5px;
-            letter-spacing: .2em;
-            color: rgba(255,255,255,.15);
-        }
+        .ft-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 9px; letter-spacing: .45em; color: rgba(255,255,255,.28); }
+        .ft-copy { font-family: 'Montserrat', sans-serif; font-size: 7.5px; letter-spacing: .2em; color: rgba(255,255,255,.15); }
 
-        /* Grain */
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: .022;
-            pointer-events: none;
-            z-index: 999;
+        /* ─── About Overlay ─── */
+        .about-overlay {
+            position: fixed; inset: 0; z-index: 600;
+            background: var(--black); color: #fff;
+            display: flex; flex-direction: column;
+            transform: translateY(100%); transition: transform .8s cubic-bezier(.77,0,.18,1);
+            overflow-y: auto;
         }
+        .about-overlay.open { transform: translateY(0); }
 
-        /* ── Mobile ── */
+        .about-header {
+            padding: 32px 60px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--line-w);
+            position: sticky; top: 0; background: var(--black); z-index: 10; flex-shrink: 0;
+        }
+        .about-header-logo { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 10px; letter-spacing: .5em; color: #fff; }
+        .about-close {
+            width: 44px; height: 44px; border: 1px solid var(--line-w);
+            border-radius: 50%; background: none; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; transition: all .3s; line-height: 1;
+        }
+        .about-close:hover { background: #fff; color: var(--black); }
+
+        .about-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 56vh; flex-shrink: 0; }
+
+        .about-photo {
+            background: #111; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 56vh;
+        }
+        .about-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; filter: grayscale(100%) brightness(0.6); }
+        .about-photo-placeholder {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+            width: 100%; height: 100%; min-height: 56vh;
+        }
+        .about-photo-placeholder svg { opacity: .15; }
+        .about-photo-placeholder span { font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: .3em; color: rgba(255,255,255,.2); text-transform: uppercase; }
+
+        .about-intro {
+            padding: 80px 60px; background: #0d0d0d;
+            display: flex; flex-direction: column; justify-content: flex-end;
+        }
+        .about-intro-label {
+            font-family: 'Montserrat', sans-serif; font-size: 8px;
+            letter-spacing: .45em; text-transform: uppercase; color: rgba(255,255,255,.3);
+            display: flex; align-items: center; gap: 12px; margin-bottom: 28px;
+        }
+        .about-intro-label::before { content: ''; display: block; width: 28px; height: 1px; background: currentColor; }
+        .about-name { font-size: clamp(32px, 4.5vw, 64px); font-weight: 300; letter-spacing: .1em; line-height: 1.2; margin-bottom: 6px; }
+        .about-name-en { font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: .4em; color: rgba(255,255,255,.3); text-transform: uppercase; margin-bottom: 40px; }
+        .about-motto-wrap { border-left: 1px solid rgba(255,255,255,.18); padding-left: 20px; }
+        .about-motto-label { font-family: 'Montserrat', sans-serif; font-size: 7.5px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.3); margin-bottom: 10px; }
+        .about-motto { font-size: clamp(14px, 1.6vw, 20px); font-weight: 300; letter-spacing: .1em; line-height: 1.7; font-style: italic; }
+
+        .about-body { display: grid; grid-template-columns: 1fr 1.4fr; border-top: 1px solid var(--line-w); }
+
+        .about-vision { padding: 80px 60px; border-right: 1px solid var(--line-w); }
+        .about-career { padding: 80px 60px; }
+
+        .about-sec-label {
+            font-family: 'Montserrat', sans-serif; font-size: 8px; letter-spacing: .4em;
+            text-transform: uppercase; color: rgba(255,255,255,.3);
+            display: flex; align-items: center; gap: 12px; margin-bottom: 36px;
+        }
+        .about-sec-label::before { content: ''; display: block; width: 28px; height: 1px; background: currentColor; }
+
+        .about-vision-text { font-size: 15px; font-weight: 300; line-height: 2.5; letter-spacing: .1em; color: rgba(255,255,255,.65); }
+        .about-vision-text p + p { margin-top: 28px; }
+
+        .about-timeline { display: flex; flex-direction: column; }
+        .about-tl-item { display: grid; grid-template-columns: 80px 1fr; gap: 28px; padding: 26px 0; border-bottom: 1px solid var(--line-w); }
+        .about-tl-item:first-child { border-top: 1px solid var(--line-w); }
+        .about-tl-year { font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: .1em; color: rgba(255,255,255,.3); padding-top: 3px; }
+        .about-tl-content strong { display: block; font-size: 13px; font-weight: 400; letter-spacing: .1em; margin-bottom: 6px; line-height: 1.6; }
+        .about-tl-content span { font-size: 12px; font-weight: 300; letter-spacing: .08em; color: rgba(255,255,255,.42); line-height: 2; }
+
+        /* ─── Mobile ─── */
         @media (max-width: 768px) {
             header { padding: 22px 24px; }
             nav { display: none; }
@@ -677,15 +419,20 @@
             .scroll-cue { left: 28px; }
             .sec-pad { padding: 90px 24px; }
             .msg-heading { white-space: normal; }
-            .co-layout,
-            .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+            .co-layout, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
             .co-heading { position: relative; top: 0; }
-            .ov-sub { position: relative; top: 0; }
             .svc-item { grid-template-columns: 52px 1fr 44px; gap: 20px; padding: 28px 0; }
-            .ov-header,
-            .ov-img-overlay,
-            .ov-body { padding-left: 24px; padding-right: 24px; }
+            .ov-header, .ov-img-overlay, .ov-body { padding-left: 24px; padding-right: 24px; }
             .ov-body { grid-template-columns: 1fr; gap: 40px; padding-top: 48px; padding-bottom: 60px; }
+            .ov-sub { position: relative; top: 0; }
+            .about-hero { grid-template-columns: 1fr; }
+            .about-photo { min-height: 50vw; }
+            .about-photo-placeholder { min-height: 50vw; }
+            .about-intro { padding: 48px 24px; }
+            .about-body { grid-template-columns: 1fr; }
+            .about-vision { padding: 60px 24px; border-right: none; border-bottom: 1px solid var(--line-w); }
+            .about-career { padding: 60px 24px; }
+            .about-header { padding: 22px 24px; }
             footer { padding: 28px 24px; flex-direction: column; gap: 12px; text-align: center; }
             .contact-bg { display: none; }
         }
@@ -693,314 +440,319 @@
 </head>
 <body>
 
-    <div id="cur"></div>
-    <div id="cur-ring"></div>
+<div id="cur"></div>
+<div id="cur-ring"></div>
 
-    <!-- Header -->
-    <header id="hdr">
-        <a href="#" class="logo">Ark inc.</a>
-        <nav>
-            <a href="#message">Message</a>
-            <a href="#services">Service</a>
-            <a href="#profile">Company</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+<!-- ═══ Header ═══ -->
+<header id="hdr">
+    <a href="#" class="logo">Ark inc.</a>
+    <nav>
+        <a href="#message">Message</a>
+        <a href="#services">Service</a>
+        <a href="#profile">Company</a>
+        <a href="#" id="about-open">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
 
-    <!-- ═══ Hero ═══ -->
-    <section class="hero" id="hero">
-        <div class="hero-bg">
-            <!--
-                ノアの方舟イメージ：嵐の大海原・壮大な山／空の画像を使用。
-                実際の動画に差し替える場合は img を video タグに置き換えてください。
-                例: <video autoplay muted loop playsinline src="your-ark-video.mp4"></video>
-            -->
-            <!--
-                次世代へ繋ぐイメージ：光が射し込む橋・道・トンネル
-                実際の動画に差し替える場合は img を video タグに置き換えてください。
-                例: <video autoplay muted loop playsinline src="your-video.mp4"></video>
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+    <div class="hero-bg">
+        <!--
+            動画に差し替える場合:
+            <video autoplay muted loop playsinline src="your-video.mp4" style="width:100%;height:100%;object-fit:cover;filter:grayscale(100%) brightness(0.32);"></video>
+        -->
+        <img src="https://picsum.photos/id/167/1600/900" alt="" id="hero-img">
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-label">総合コンサルティングカンパニー</p>
+        <h2 class="hero-title">世代の壁を超えてゆけ</h2>
+        <p class="hero-subcopy">経験とノウハウを次世代へ。<br>あなたの知恵が、誰かの未来を動かす。</p>
+        <div class="hero-rule"></div>
+    </div>
+    <div class="scroll-cue">
+        <div class="scroll-line-wrap"><div class="scroll-line"></div></div>
+        <span>Scroll</span>
+    </div>
+</section>
 
-                複数候補（雰囲気に合わせて src の ID を変更してください）:
-                  光の中の橋     : id/1041
-                  霧の中の道     : id/206
-                  光の中の木立   : id/28
-                  夜明けの空     : id/1025
-            -->
-            <img
-                src="https://picsum.photos/id/28/1600/900"
-                alt="次世代へ繋ぐ — 光の中の道"
-                id="hero-img"
-                style="opacity:0;"
-            >
-        </div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <p class="hero-label">General Consulting &nbsp;—&nbsp; Est. 2025</p>
-            <h2 class="hero-title">世代の壁を超えてゆけ</h2>
-            <p class="hero-subcopy">経験とノウハウを次世代へ。<br>あなたの知恵が、誰かの未来を動かす。</p>
-            <div class="hero-rule"></div>
-        </div>
-        <div class="scroll-cue">
-            <div class="scroll-line-wrap"><div class="scroll-line"></div></div>
-            <span>Scroll</span>
-        </div>
-    </section>
-
-    <!-- ═══ Message ═══ -->
-    <section id="message">
-        <div class="sec-pad">
-            <p class="sec-label reveal">Message</p>
-            <h3 class="msg-heading reveal">誰もが持つ、唯一無二の経験がある。</h3>
-            <div class="msg-body msg-body--full">
-                <p class="reveal">誰もが持つ、あの時、あの場所で得た唯一無二の経験には、<br>必ず誰かの未来を照らすチカラが宿っていると、私たちは信じています。</p>
-                <div class="msg-sep"></div>
-                <p class="reveal" style="transition-delay:.08s">その貴重な経験が時間や場所の制約を超え、<br>次世代へと繋がる懸け橋となることが、<br>私たちの使命です。</p>
-                <div class="msg-sep"></div>
-                <p class="reveal" style="transition-delay:.16s">あなたの情熱とノウハウが、誰かの未来に繋がる羅針盤となるよう、<br>私たちは常に寄り添い、その継承の未来を支え続けます。</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ Services ═══ -->
-    <section id="services">
-        <div class="sec-pad">
-            <p class="sec-label reveal">Service</p>
-            <p class="svc-intro reveal">
-                私たちは総合コンサルティング事業者として、<br>幅広い活動を実施しております。
-            </p>
-            <div class="svc-list">
-                <div class="svc-item reveal" data-svc="0">
-                    <span class="svc-num">01</span>
-                    <span class="svc-name">アプリケーション開発・運営事業<span class="svc-catch">アイデアをプロダクトへ。企画から運営まで一貫支援。</span></span>
-                    <div class="svc-arrow">＋</div>
-                </div>
-                <div class="svc-item reveal" style="transition-delay:.1s" data-svc="1">
-                    <span class="svc-num">02</span>
-                    <span class="svc-name">コンサルティング事業<span class="svc-catch">事業戦略・マーケティング・モビリティ導入を現場から支える。</span></span>
-                    <div class="svc-arrow">＋</div>
-                </div>
-                <div class="svc-item reveal" style="transition-delay:.2s" data-svc="2">
-                    <span class="svc-num">03</span>
-                    <span class="svc-name">セミナー事業<span class="svc-catch">トヨタTPSや新規事業企画など、現場を変える学びを提供。</span></span>
-                    <div class="svc-arrow">＋</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ Company ═══ -->
-    <section id="profile">
-        <div class="sec-pad">
-            <p class="sec-label reveal">Company</p>
-            <div class="co-layout">
-                <div class="co-heading reveal">
-                    会社<em>概要</em>
-                    <p class="co-desc">総合コンサルティング事業者として、<br>経験と情熱を次世代へ繋ぐ懸け橋として、<br>皆様のご支援をいたします。</p>
-                </div>
-                <div class="co-table">
-                    <div class="co-row">
-                        <span class="co-key">Company<span class="co-key-ja">会社名</span></span>
-                        <span class="co-val">Ark inc.</span>
-                    </div>
-                    <div class="co-row">
-                        <span class="co-key">Address<span class="co-key-ja">所在地</span></span>
-                        <span class="co-val">〒165-0023 東京都中野区江原町2-13-13</span>
-                    </div>
-                    <div class="co-row">
-                        <span class="co-key">CEO<span class="co-key-ja">代表取締役</span></span>
-                        <span class="co-val">茂住雄太</span>
-                    </div>
-                    <div class="co-row">
-                        <span class="co-key">Founded<span class="co-key-ja">設立</span></span>
-                        <span class="co-val">2025年11月</span>
-                    </div>
-                    <div class="co-row">
-                        <span class="co-key">Capital<span class="co-key-ja">資本金</span></span>
-                        <span class="co-val">100万円</span>
-                    </div>
-                    <div class="co-row">
-                        <span class="co-key">Business<span class="co-key-ja">事業内容</span></span>
-                        <span class="co-val">コンサルティング事業<br>アプリ開発・運営事業<br>セミナー事業</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ Contact ═══ -->
-    <section id="contact">
-        <div class="sec-pad" style="position:relative;">
-            <div class="contact-bg">CONTACT</div>
-            <div class="contact-grid">
-                <div class="reveal">
-                    <p class="sec-label" style="color:rgba(255,255,255,.25);">Contact</p>
-                    <h3 class="contact-head">まずは、<em>お気軽にご相談を。</em></h3>
-                    <p class="contact-sub">事業のこと、サービスのこと、どんな小さなことでも構いません。<br>一緒に考えるところから始めましょう。</p>
-                </div>
-                <div class="reveal" style="transition-delay:.15s">
-                    <a href="mailto:kanri@mycoach-myteam.com" class="contact-email">kanri@mycoach-myteam.com</a>
-                    <a href="mailto:kanri@mycoach-myteam.com" class="contact-btn">メールを送る</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <span class="ft-logo">Ark inc.</span>
-        <span class="ft-copy">© 2026 Ark inc. All Rights Reserved.</span>
-    </footer>
-
-    <!-- ═══ Service Overlay ═══ -->
-    <div class="svc-overlay" id="svc-overlay" role="dialog" aria-modal="true">
-        <div class="ov-header">
-            <span class="ov-logo">Ark inc.</span>
-            <button class="ov-close" id="ov-close" aria-label="閉じる">×</button>
-        </div>
-        <div class="ov-img-wrap">
-            <img src="" alt="" id="ov-img">
-            <div class="ov-img-overlay">
-                <p class="ov-num" id="ov-num"></p>
-                <h3 class="ov-title" id="ov-title"></h3>
-            </div>
-        </div>
-        <div class="ov-body">
-            <div class="ov-sub" id="ov-sub"></div>
-            <div class="ov-desc" id="ov-desc"></div>
+<!-- ═══ Message ═══ -->
+<section id="message">
+    <div class="sec-pad">
+        <p class="sec-label reveal">Message</p>
+        <h3 class="msg-heading reveal">誰もが持つ、唯一無二の経験がある。</h3>
+        <div class="msg-body">
+            <p class="reveal">誰もが持つ、あの時、あの場所で得た唯一無二の経験には、<br>必ず誰かの未来を照らすチカラが宿っていると、私たちは信じています。</p>
+            <div class="msg-sep"></div>
+            <p class="reveal" style="transition-delay:.08s">その貴重な経験が時間や場所の制約を超え、<br>次世代へと繋がる懸け橋となることが、<br>私たちの使命です。</p>
+            <div class="msg-sep"></div>
+            <p class="reveal" style="transition-delay:.16s">あなたの情熱とノウハウが、誰かの未来に繋がる羅針盤となるよう、<br>私たちは常に寄り添い、その継承の未来を支え続けます。</p>
         </div>
     </div>
+</section>
 
-    <script>
-    /* ── Service data ── */
-    const SVCS = [
-        {
-            num: '01 / Service',
-            title: 'アプリケーション開発・運営事業',
-            img: 'https://picsum.photos/id/160/1400/700',
-            sub: 'アイデアを、<em>世界へ届ける</em>プロダクトに。',
-            desc: `<p>自社サービス「MyCoach MyTeam（mycoach-myteam.com）」の開発・運営を通じて培った実践知を活かし、企画構想から設計・開発・リリース・運営改善まで、プロダクト開発のすべてのフェーズをご支援します。</p>
-<p>ユーザー体験を起点としたプロダクト設計と、スモールスタートから拡張できる開発体制で、アイデアを確かなサービスへと育てます。</p>`,
-            points: [
-                { title: '企画・設計', desc: 'ユーザーリサーチ・要件定義・IA設計・プロトタイプ作成' },
-                { title: '開発・実装', desc: 'WebアプリおよびモバイルアプリのUI/UX設計・フロントエンド・バックエンド開発' },
-                { title: '運営・改善', desc: 'リリース後のユーザー分析・KPIモニタリング・継続的プロダクト改善' },
-            ]
-        },
-        {
-            num: '02 / Service',
-            title: 'コンサルティング事業',
-            img: 'https://picsum.photos/id/447/1400/700',
-            sub: '経験と知見を、<em>次の成長戦略</em>へと変える。',
-            desc: `<p>事業の成長フェーズや経営課題に応じて、事業戦略の立案からマーケティング施策の設計、新規モビリティサービス導入まで、幅広い領域で実行可能な解決策をご提供します。</p>
-<p>現場に寄り添った伴走型のスタイルで、計画の策定にとどまらず、実行・検証・改善まで一貫してご支援いたします。</p>`,
-            points: [
-                { title: '事業戦略', desc: '市場分析・競合調査・中長期事業戦略の策定と実行支援' },
-                { title: 'マーケティング', desc: 'デジタルマーケティング戦略・顧客獲得施策・ブランディング' },
-                { title: 'モビリティ導入戦略', desc: 'EV・MaaS・ラストワンマイルなど新規モビリティサービスの導入・事業化支援' },
-            ]
-        },
-        {
-            num: '03 / Service',
-            title: 'セミナー事業',
-            img: 'https://picsum.photos/id/367/1400/700',
-            sub: '知識と経験を、<em>次世代の現場力</em>へ。',
-            desc: `<p>企業研修を中心に、新規事業の企画・推進に必要な思考法や実践フレームワークを学ぶプログラムを提供しています。また、トヨタ生産方式（TPS）を活用したカイゼン・業務効率化セミナーも実施しており、現場から変革を起こす人材育成を支援します。</p>
-<p>講義形式にとどまらず、自社の課題をテーマにしたワークショップ形式で、学びをすぐに実務へ接続できる設計にこだわっています。</p>`,
-            points: [
-                { title: '企業研修', desc: '新規事業企画・イノベーション思考・組織変革をテーマにしたカスタマイズ研修' },
-                { title: 'トヨタTPS活用セミナー', desc: 'トヨタ生産方式をベースにしたカイゼン・ムダ取り・業務プロセス改善セミナー' },
-                { title: '新規事業支援プログラム', desc: 'アイデア創出から事業計画策定・検証までを伴走支援するハンズオン型プログラム' },
-            ]
-        }
-    ];
+<!-- ═══ Services ═══ -->
+<section id="services">
+    <div class="sec-pad">
+        <p class="sec-label reveal">Service</p>
+        <p class="svc-intro reveal">私たちは総合コンサルティング事業者として、<br>幅広い活動を実施しております。</p>
+        <div class="svc-list">
+            <div class="svc-item reveal" data-svc="1">
+                <span class="svc-num">01</span>
+                <span class="svc-name">コンサルティング事業<span class="svc-catch">事業戦略・マーケティング・モビリティ導入を現場から支える。</span></span>
+                <div class="svc-arrow">＋</div>
+            </div>
+            <div class="svc-item reveal" style="transition-delay:.1s" data-svc="0">
+                <span class="svc-num">02</span>
+                <span class="svc-name">アプリケーション開発・運営事業<span class="svc-catch">アイデアをプロダクトへ。企画から運営まで一貫支援。</span></span>
+                <div class="svc-arrow">＋</div>
+            </div>
+            <div class="svc-item reveal" style="transition-delay:.2s" data-svc="2">
+                <span class="svc-num">03</span>
+                <span class="svc-name">セミナー事業<span class="svc-catch">トヨタTPSや新規事業企画など、現場を変える学びを提供。</span></span>
+                <div class="svc-arrow">＋</div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    /* ── Overlay ── */
-    const overlay  = document.getElementById('svc-overlay');
-    const ovClose  = document.getElementById('ov-close');
+<!-- ═══ Company ═══ -->
+<section id="profile">
+    <div class="sec-pad">
+        <p class="sec-label reveal">Company</p>
+        <div class="co-layout">
+            <div class="co-heading reveal">
+                会社<em>概要</em>
+                <p class="co-desc">総合コンサルティング事業者として、<br>経験と情熱を次世代へ繋ぐ懸け橋として、<br>皆様のご支援をいたします。</p>
+            </div>
+            <div class="co-table">
+                <div class="co-row"><span class="co-key">Company<span class="co-key-ja">会社名</span></span><span class="co-val">Ark inc.</span></div>
+                <div class="co-row"><span class="co-key">Address<span class="co-key-ja">所在地</span></span><span class="co-val">〒165-0023 東京都中野区江原町2-13-13</span></div>
+                <div class="co-row"><span class="co-key">CEO<span class="co-key-ja">代表取締役</span></span><span class="co-val">茂住雄太</span></div>
+                <div class="co-row"><span class="co-key">Founded<span class="co-key-ja">設立</span></span><span class="co-val">2025年11月</span></div>
+                <div class="co-row"><span class="co-key">Capital<span class="co-key-ja">資本金</span></span><span class="co-val">100万円</span></div>
+                <div class="co-row"><span class="co-key">Business<span class="co-key-ja">事業内容</span></span><span class="co-val">コンサルティング事業<br>アプリ開発・運営事業<br>セミナー事業</span></div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    function openOverlay(idx) {
-        const d = SVCS[idx];
-        document.getElementById('ov-img').src   = d.img;
-        document.getElementById('ov-num').textContent = d.num;
-        document.getElementById('ov-title').textContent = d.title;
-        document.getElementById('ov-sub').innerHTML = d.sub;
-        document.getElementById('ov-desc').innerHTML =
-            d.desc +
-            '<div class="ov-points">' +
-            d.points.map(p =>
-                `<div class="ov-point">
-                    <div class="ov-point-dot"></div>
-                    <div class="ov-point-body">
-                        <strong>${p.title}</strong>
-                        <span>${p.desc}</span>
+<!-- ═══ Contact ═══ -->
+<section id="contact">
+    <div class="sec-pad" style="position:relative;">
+        <div class="contact-bg">CONTACT</div>
+        <div class="contact-grid">
+            <div class="reveal">
+                <p class="sec-label" style="color:rgba(255,255,255,.25);">Contact</p>
+                <h3 class="contact-head">まずは、<em>お気軽にご相談を。</em></h3>
+                <p class="contact-sub">事業のこと、サービスのこと、どんな小さなことでも構いません。<br>一緒に考えるところから始めましょう。</p>
+            </div>
+            <div class="reveal" style="transition-delay:.15s">
+                <a href="mailto:kanri@mycoach-myteam.com" class="contact-email">kanri@mycoach-myteam.com</a>
+                <a href="mailto:kanri@mycoach-myteam.com" class="contact-btn">メールを送る</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ Footer ═══ -->
+<footer>
+    <span class="ft-logo">Ark inc.</span>
+    <span class="ft-copy">© 2026 Ark inc. All Rights Reserved.</span>
+</footer>
+
+<!-- ═══ Service Overlay ═══ -->
+<div class="svc-overlay" id="svc-overlay">
+    <div class="ov-header">
+        <span class="ov-logo">Ark inc.</span>
+        <button class="ov-close" id="svc-close">×</button>
+    </div>
+    <div class="ov-img-wrap">
+        <img src="" alt="" id="ov-img">
+        <div class="ov-img-overlay">
+            <p class="ov-num" id="ov-num"></p>
+            <h3 class="ov-title" id="ov-title"></h3>
+        </div>
+    </div>
+    <div class="ov-body">
+        <div class="ov-sub" id="ov-sub"></div>
+        <div class="ov-desc" id="ov-desc"></div>
+    </div>
+</div>
+
+<!-- ═══ About Overlay ═══ -->
+<div class="about-overlay" id="about-overlay">
+    <div class="about-header">
+        <span class="about-header-logo">Ark inc.</span>
+        <button class="about-close" id="about-close">×</button>
+    </div>
+    <div class="about-hero">
+        <div class="about-photo">
+            <!--
+                顔写真をお持ちの場合は下記に差し替えてください:
+                <img src="your-photo.jpg" alt="茂住雄太">
+            -->
+            <div class="about-photo-placeholder">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="32" cy="24" r="14" stroke="white" stroke-width="1"/>
+                    <path d="M6 58c0-14.4 11.6-26 26-26s26 11.6 26 26" stroke="white" stroke-width="1"/>
+                </svg>
+                <span>Photo Coming Soon</span>
+            </div>
+        </div>
+        <div class="about-intro">
+            <p class="about-intro-label">代表取締役 / Representative Director</p>
+            <h2 class="about-name">茂住 雄太</h2>
+            <p class="about-name-en">Yuta Mozumi</p>
+            <div class="about-motto-wrap">
+                <p class="about-motto-label">座右の銘</p>
+                <p class="about-motto">「本気の失敗には、価値がある。」</p>
+            </div>
+        </div>
+    </div>
+    <div class="about-body">
+        <div class="about-vision">
+            <p class="about-sec-label">Vision — ビジョン</p>
+            <div class="about-vision-text">
+                <p>私がトヨタで目の当たりにしたのは、<br>長年現場で培われた知恵が、次の世代にきちんと渡されたとき、<br>組織が劇的に変わるという事実でした。</p>
+                <p>経験は、持っているだけでは眠り続ける。<br>でも、誰かに渡された瞬間、それは生きたチカラに変わる。<br>その確信が、Ark inc.を立ち上げた原点です。</p>
+                <p>肩書きや規模に関係なく、<br>あなたが全力で歩んできた道には、<br>必ず次の誰かの道を照らすチカラが宿っている。<br>その継承を、もっと当たり前にしていきたい。<br>それが私の使命です。</p>
+            </div>
+        </div>
+        <div class="about-career">
+            <p class="about-sec-label">Career — 経歴</p>
+            <div class="about-timeline">
+                <div class="about-tl-item">
+                    <span class="about-tl-year">2015</span>
+                    <div class="about-tl-content">
+                        <strong>立教大学 卒業</strong>
                     </div>
-                </div>`
-            ).join('') +
-            '</div>';
-        overlay.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        overlay.scrollTop = 0;
+                </div>
+                <div class="about-tl-item">
+                    <span class="about-tl-year">2015</span>
+                    <div class="about-tl-content">
+                        <strong>トヨタ自動車株式会社 入社</strong>
+                        <span>法人向け共創協業事業の立ち上げや、新規事業の立ち上げ、<br>国内市場の中長期企画など幅広い業務に従事。</span>
+                    </div>
+                </div>
+                <div class="about-tl-item">
+                    <span class="about-tl-year">2024</span>
+                    <div class="about-tl-content">
+                        <strong>合同会社Limot 参画</strong>
+                        <span>立ち上げメンバーとして、モビリティサービス事業に参画。</span>
+                    </div>
+                </div>
+                <div class="about-tl-item">
+                    <span class="about-tl-year">2025</span>
+                    <div class="about-tl-content">
+                        <strong>Ark inc. 設立 / 代表取締役</strong>
+                        <span>さらなる事業拡大に向け、Ark inc.を設立。経験と情熱を次世代へ繋ぐ事業を展開。</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ── Service data ── */
+const SVCS = [
+    {
+        num: '01 / Service',
+        title: 'アプリケーション開発・運営事業',
+        img: 'https://picsum.photos/id/0/1400/700',
+        sub: 'アイデアを、<em>世界へ届ける</em>プロダクトに。',
+        desc: `<p>自社サービス「MyCoach MyTeam（mycoach-myteam.com）」の開発・運営を通じて培った実践知を活かし、企画構想から設計・開発・リリース・運営改善まで、プロダクト開発のすべてのフェーズをご支援します。</p><p>ユーザー体験を起点としたプロダクト設計と、スモールスタートから拡張できる開発体制で、アイデアを確かなサービスへと育てます。</p>`,
+        points: [
+            { title: '企画・設計', desc: 'ユーザーリサーチ・要件定義・IA設計・プロトタイプ作成' },
+            { title: '開発・実装', desc: 'WebアプリおよびモバイルアプリのUI/UX設計・フロントエンド・バックエンド開発' },
+            { title: '運営・改善', desc: 'リリース後のユーザー分析・KPIモニタリング・継続的プロダクト改善' },
+        ]
+    },
+    {
+        num: '02 / Service',
+        title: 'コンサルティング事業',
+        img: 'https://picsum.photos/id/1040/1400/700',
+        sub: '経験と知見を、<em>次の成長戦略</em>へと変える。',
+        desc: `<p>事業の成長フェーズや経営課題に応じて、事業戦略の立案からマーケティング施策の設計、新規モビリティサービス導入まで、幅広い領域で実行可能な解決策をご提供します。</p><p>現場に寄り添った伴走型のスタイルで、計画の策定にとどまらず、実行・検証・改善まで一貫してご支援いたします。</p>`,
+        points: [
+            { title: '事業戦略', desc: '市場分析・競合調査・中長期事業戦略の策定と実行支援' },
+            { title: 'マーケティング', desc: 'デジタルマーケティング戦略・顧客獲得施策・ブランディング' },
+            { title: 'モビリティ導入戦略', desc: 'EV・MaaS・ラストワンマイルなど新規モビリティサービスの導入・事業化支援' },
+        ]
+    },
+    {
+        num: '03 / Service',
+        title: 'セミナー事業',
+        img: 'https://picsum.photos/id/375/1400/700',
+        sub: '知識と経験を、<em>次世代の現場力</em>へ。',
+        desc: `<p>企業研修を中心に、新規事業の企画・推進に必要な思考法や実践フレームワークを学ぶプログラムを提供しています。また、トヨタ生産方式（TPS）を活用したカイゼン・業務効率化セミナーも実施しており、現場から変革を起こす人材育成を支援します。</p><p>講義形式にとどまらず、自社の課題をテーマにしたワークショップ形式で、学びをすぐに実務へ接続できる設計にこだわっています。</p>`,
+        points: [
+            { title: '企業研修', desc: '新規事業企画・イノベーション思考・組織変革をテーマにしたカスタマイズ研修' },
+            { title: 'トヨタTPS活用セミナー', desc: 'トヨタ生産方式をベースにしたカイゼン・ムダ取り・業務プロセス改善セミナー' },
+            { title: '新規事業支援プログラム', desc: 'アイデア創出から事業計画策定・検証までを伴走支援するハンズオン型プログラム' },
+        ]
     }
+];
 
-    function closeOverlay() {
-        overlay.classList.remove('open');
-        document.body.style.overflow = '';
-    }
+/* ── Service Overlay ── */
+const svcOverlay = document.getElementById('svc-overlay');
+const svcClose   = document.getElementById('svc-close');
 
-    document.querySelectorAll('.svc-item').forEach(el => {
-        el.addEventListener('click', () => openOverlay(+el.dataset.svc));
-    });
-    ovClose.addEventListener('click', closeOverlay);
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOverlay(); });
+function openSvc(idx) {
+    const d = SVCS[idx];
+    document.getElementById('ov-img').src = d.img;
+    document.getElementById('ov-num').textContent = d.num;
+    document.getElementById('ov-title').textContent = d.title;
+    document.getElementById('ov-sub').innerHTML = d.sub;
+    document.getElementById('ov-desc').innerHTML = d.desc +
+        '<div class="ov-points">' +
+        d.points.map(p => `<div class="ov-point"><div class="ov-point-dot"></div><div class="ov-point-body"><strong>${p.title}</strong><span>${p.desc}</span></div></div>`).join('') +
+        '</div>';
+    svcOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    svcOverlay.scrollTop = 0;
+}
+function closeSvc() { svcOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+document.querySelectorAll('.svc-item').forEach(el => el.addEventListener('click', () => openSvc(+el.dataset.svc)));
+svcClose.addEventListener('click', closeSvc);
 
-    /* ── Cursor ── */
-    const cur  = document.getElementById('cur');
-    const ring = document.getElementById('cur-ring');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        cur.style.left = mx + 'px'; cur.style.top = my + 'px';
-    });
-    (function tick() {
-        rx += (mx - rx) * .13; ry += (my - ry) * .13;
-        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-        requestAnimationFrame(tick);
-    })();
-    document.querySelectorAll('a, button, .svc-item').forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
-    });
+/* ── About Overlay ── */
+const aboutOverlay = document.getElementById('about-overlay');
+const aboutClose   = document.getElementById('about-close');
+const aboutOpen    = document.getElementById('about-open');
 
-    /* ── Header on scroll ── */
-    const hdr = document.getElementById('hdr');
-    window.addEventListener('scroll', () => {
-        hdr.classList.toggle('bg', window.scrollY > 50);
-    }, { passive: true });
+function openAbout(e) { e.preventDefault(); aboutOverlay.classList.add('open'); document.body.style.overflow = 'hidden'; aboutOverlay.scrollTop = 0; }
+function closeAbout() { aboutOverlay.classList.remove('open'); document.body.style.overflow = ''; }
+aboutOpen.addEventListener('click', openAbout);
+aboutClose.addEventListener('click', closeAbout);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSvc(); closeAbout(); } });
 
-    /* ── Scroll reveal ── */
-    const revealObs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
-    }, { threshold: 0.08 });
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+/* ── Cursor ── */
+const cur = document.getElementById('cur');
+const ring = document.getElementById('cur-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx+'px'; cur.style.top = my+'px'; });
+(function tick() { rx += (mx-rx)*.13; ry += (my-ry)*.13; ring.style.left = rx+'px'; ring.style.top = ry+'px'; requestAnimationFrame(tick); })();
+document.querySelectorAll('a, button, .svc-item').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-grow'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-grow'));
+});
 
-    const rowObs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.co-row').forEach((row, i) => {
-        row.style.transitionDelay = (i * 0.07) + 's';
-        rowObs.observe(row);
-    });
+/* ── Header scroll ── */
+window.addEventListener('scroll', () => document.getElementById('hdr').classList.toggle('scrolled', scrollY > 50), { passive: true });
 
-    /* ── Hero image fade in ── */
-    const heroImg = document.getElementById('hero-img');
-    heroImg.onload = () => {
-        heroImg.style.transition = 'opacity 2s ease';
-        heroImg.style.opacity = '1';
-    };
-    if (heroImg.complete) {
-        heroImg.style.transition = 'opacity 2s ease';
-        heroImg.style.opacity = '1';
-    }
-    </script>
+/* ── Reveal ── */
+const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+const co = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }), { threshold: 0.1 });
+document.querySelectorAll('.co-row').forEach((row, i) => { row.style.transitionDelay = (i*.07)+'s'; co.observe(row); });
+
+/* ── Hero image ── */
+const hi = document.getElementById('hero-img');
+hi.onload = () => hi.classList.add('loaded');
+if (hi.complete) hi.classList.add('loaded');
+</script>
 </body>
 </html>
