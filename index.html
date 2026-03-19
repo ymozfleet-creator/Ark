@@ -22,7 +22,6 @@
             background: var(--white);
             color: var(--black);
             overflow-x: hidden;
-            cursor: none;
         }
 
         /* ─── Grain overlay ─── */
@@ -34,16 +33,22 @@
             pointer-events: none;
         }
 
-        /* ─── Custom cursor ─── */
+        /* ─── Custom cursor (マウス操作デバイスのみ) ─── */
+        @media (pointer: fine) {
+            body { cursor: none; }
+        }
         #cur, #cur-ring {
+            display: none;
             position: fixed;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%,-50%);
         }
-        #cur { width: 7px; height: 7px; background: #fff; mix-blend-mode: difference; transition: width .25s, height .25s; }
-        #cur-ring { width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.45); mix-blend-mode: difference; transition: width .3s, height .3s; }
+        @media (pointer: fine) {
+            #cur { display: block; width: 7px; height: 7px; background: #fff; mix-blend-mode: difference; transition: width .25s, height .25s; }
+            #cur-ring { display: block; width: 34px; height: 34px; border: 1px solid rgba(255,255,255,.45); mix-blend-mode: difference; transition: width .3s, height .3s; }
+        }
         .cursor-grow #cur { width: 12px; height: 12px; }
         .cursor-grow #cur-ring { width: 56px; height: 56px; }
 
@@ -274,6 +279,45 @@
         .ov-point-body strong { display: block; font-size: 13px; letter-spacing: .1em; margin-bottom: 4px; }
         .ov-point-body span { font-size: 12.5px; color: var(--gray); line-height: 1.9; letter-spacing: .05em; font-weight: 300; }
 
+        /* ─── News ─── */
+        #news { background: var(--white); border-top: 1px solid var(--line-b); }
+        .news-list { display: flex; flex-direction: column; }
+        .news-item {
+            display: grid;
+            grid-template-columns: 110px 80px 1fr 24px;
+            gap: 28px; align-items: center;
+            padding: 28px 0;
+            border-bottom: 1px solid var(--line-b);
+            text-decoration: none; color: var(--black);
+            transition: background .3s, padding .3s;
+        }
+        .news-item:first-child { border-top: 1px solid var(--line-b); }
+        .news-item:hover { padding-left: 12px; padding-right: 12px; background: rgba(0,0,0,.02); }
+        .news-date {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px; letter-spacing: .1em; color: var(--gray);
+        }
+        .news-tag {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 8px; letter-spacing: .2em;
+            color: var(--black); border: 1px solid var(--line-b);
+            padding: 4px 10px; white-space: nowrap; text-align: center;
+        }
+        .news-title {
+            font-size: 14px; font-weight: 300;
+            letter-spacing: .08em; line-height: 1.7;
+        }
+        .news-arrow {
+            font-size: 14px; color: var(--gray);
+            transition: transform .3s; text-align: right;
+        }
+        .news-item:hover .news-arrow { transform: translateX(4px); color: var(--black); }
+
+        @media (max-width: 768px) {
+            .news-item { grid-template-columns: 1fr 24px; gap: 12px; }
+            .news-date, .news-tag { display: none; }
+        }
+
         /* ─── Company ─── */
         #profile { background: var(--white); }
         .co-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 100px; align-items: start; }
@@ -449,6 +493,7 @@
     <nav>
         <a href="#message">Message</a>
         <a href="#services">Service</a>
+        <a href="#news">News</a>
         <a href="#profile">Company</a>
         <a href="#" id="about-open">About</a>
         <a href="#contact">Contact</a>
@@ -481,7 +526,7 @@
 <section id="message">
     <div class="sec-pad">
         <p class="sec-label reveal">Message</p>
-        <h3 class="msg-heading reveal">誰もが持つ、唯一無二の経験がある。</h3>
+        <h3 class="msg-heading reveal">唯一無二の経験を、財産に。</h3>
         <div class="msg-body">
             <p class="reveal">誰もが持つ、あの時、あの場所で得た唯一無二の経験には、<br>必ず誰かの未来を照らすチカラが宿っていると、私たちは信じています。</p>
             <div class="msg-sep"></div>
@@ -513,6 +558,27 @@
                 <span class="svc-name">セミナー事業<span class="svc-catch">トヨタTPSや新規事業企画など、現場を変える学びを提供。</span></span>
                 <div class="svc-arrow">＋</div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══ News ═══ -->
+<section id="news">
+    <div class="sec-pad">
+        <p class="sec-label reveal">News</p>
+        <div class="news-list">
+            <a class="news-item reveal" href="https://www.keikyu.co.jp/company/news/2025/20260319HP_25234MK.html" target="_blank" rel="noopener">
+                <span class="news-date">2026.03.19</span>
+                <span class="news-tag">実績紹介</span>
+                <span class="news-title">京急電鉄｜平和島駅周辺にて【多世代向け】シェアモビリティの実証実験を開始</span>
+                <span class="news-arrow">→</span>
+            </a>
+            <a class="news-item reveal" style="transition-delay:.1s" href="https://poc-ground.metro.tokyo.lg.jp/" target="_blank" rel="noopener">
+                <span class="news-date">2025.12.11</span>
+                <span class="news-tag">受託実績</span>
+                <span class="news-title">東京都｜PoC Ground Tokyo 令和7年度一般コース採択事業に、支援先・合同会社Limotが選定</span>
+                <span class="news-arrow">→</span>
+            </a>
         </div>
     </div>
 </section>
@@ -549,8 +615,8 @@
                 <p class="contact-sub">事業のこと、サービスのこと、どんな小さなことでも構いません。<br>一緒に考えるところから始めましょう。</p>
             </div>
             <div class="reveal" style="transition-delay:.15s">
-                <a href="mailto:kanri@mycoach-myteam.com" class="contact-email">kanri@mycoach-myteam.com</a>
-                <a href="mailto:kanri@mycoach-myteam.com" class="contact-btn">メールを送る</a>
+                <a href="/cdn-cgi/l/email-protection#412a202f3328012c38222e2022296c2c383524202c6f222e2c" class="contact-email"><span class="__cf_email__" data-cfemail="452e242b372c05283c262a24262d68283c312024286b262a28">[email&#160;protected]</span></a>
+                <a href="/cdn-cgi/l/email-protection#d9b2b8b7abb099b4a0bab6b8bab1f4b4a0adbcb8b4f7bab6b4" class="contact-btn">メールを送る</a>
             </div>
         </div>
     </div>
@@ -655,7 +721,7 @@
     </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Service data ── */
 const SVCS = [
     {
@@ -751,8 +817,7 @@ document.querySelectorAll('.co-row').forEach((row, i) => { row.style.transitionD
 
 /* ── Hero image ── */
 const hi = document.getElementById('hero-img');
-hi.onload = () => hi.classList.add('loaded');
-if (hi.complete) hi.classList.add('loaded');
+if (hi) { hi.onload = () => hi.classList.add('loaded'); if (hi.complete) hi.classList.add('loaded'); }
 </script>
 </body>
 </html>
