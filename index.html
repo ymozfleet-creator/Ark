@@ -866,16 +866,18 @@
             cursor: pointer;
             background: none;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s var(--ease);
+            z-index: 10;
         }
         
         .modal-close:hover {
             transform: rotate(90deg);
+            color: var(--color-gold-light);
         }
         
         .modal-header {
@@ -932,14 +934,116 @@
         
         /* About Modal */
         .about-modal-content {
-            max-width: 1200px;
-            width: 95%;
-            max-height: 90vh;
-            padding: 3rem;
+            max-width: 950px;
+            width: 92%;
+            max-height: 85vh;
+            padding: 3.5rem 3rem;
+            overflow-y: auto;
+        }
+        
+        .about-modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .about-modal-content::-webkit-scrollbar-track {
+            background: var(--color-bg-darker);
+        }
+        
+        .about-modal-content::-webkit-scrollbar-thumb {
+            background: var(--color-gold);
+            border-radius: 4px;
+        }
+        
+        .about-modal-body .section-header {
+            margin-bottom: 2.5rem;
+        }
+        
+        .about-modal-body .section-title {
+            font-size: 2rem;
         }
         
         .about-modal-body .ceo-profile {
-            margin-top: 3rem;
+            margin-top: 0;
+            grid-template-columns: 240px 1fr;
+            gap: 3rem;
+        }
+        
+        .about-modal-body .ceo-image {
+            width: 240px;
+            height: 240px;
+            font-size: 0.85rem;
+        }
+        
+        .about-modal-body .ceo-info h3 {
+            font-size: 1.875rem;
+            margin-bottom: 0.375rem;
+        }
+        
+        .about-modal-body .ceo-title {
+            font-size: 0.8rem;
+            margin-bottom: 2rem;
+            opacity: 0.75;
+        }
+        
+        .about-modal-body .ceo-motto {
+            margin-bottom: 2.5rem;
+            padding: 1.5rem 1.75rem;
+        }
+        
+        .about-modal-body .ceo-motto-label {
+            font-size: 0.75rem;
+            margin-bottom: 0.625rem;
+        }
+        
+        .about-modal-body .ceo-motto-text {
+            font-size: 1.25rem;
+            line-height: 1.4;
+        }
+        
+        .about-modal-body .ceo-section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .about-modal-body .ceo-section h4 {
+            font-size: 1.375rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .about-modal-body .ceo-section p {
+            font-size: 0.9rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        
+        .about-modal-body .career-timeline {
+            margin-top: 1.5rem;
+        }
+        
+        .about-modal-body .career-item {
+            grid-template-columns: 70px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1.25rem;
+        }
+        
+        .about-modal-body .career-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        
+        .about-modal-body .career-year {
+            font-size: 1.375rem;
+        }
+        
+        .about-modal-body .career-details h5 {
+            font-size: 0.9375rem;
+            margin-bottom: 0.375rem;
+        }
+        
+        .about-modal-body .career-details p {
+            font-size: 0.8125rem;
+            line-height: 1.6;
         }
         
         /* Animations */
@@ -1210,52 +1314,99 @@
             
             .about-modal-content {
                 padding: 2rem 1.5rem;
-                width: 95%;
-                max-height: 90vh;
+                width: 94%;
+                max-height: 88vh;
+            }
+            
+            .about-modal-body .section-header {
+                margin-bottom: 2rem;
+            }
+            
+            .about-modal-body .section-title {
+                font-size: 1.625rem;
             }
             
             .about-modal-body .ceo-profile {
                 grid-template-columns: 1fr;
-                gap: 2rem;
-                margin-top: 2rem;
+                gap: 1.5rem;
+                margin-top: 0;
             }
             
             .about-modal-body .ceo-image {
                 width: 100%;
-                height: 200px;
+                height: 180px;
+                font-size: 0.8rem;
             }
             
             .about-modal-body .ceo-info h3 {
-                font-size: 1.75rem;
+                font-size: 1.625rem;
+                margin-bottom: 0.375rem;
+            }
+            
+            .about-modal-body .ceo-title {
+                font-size: 0.75rem;
+                margin-bottom: 1.75rem;
             }
             
             .about-modal-body .ceo-motto {
-                padding: 1.5rem;
+                padding: 1.375rem 1.25rem;
+                margin-bottom: 2rem;
+            }
+            
+            .about-modal-body .ceo-motto-label {
+                font-size: 0.7rem;
+                margin-bottom: 0.5rem;
             }
             
             .about-modal-body .ceo-motto-text {
-                font-size: 1.125rem;
+                font-size: 1.0625rem;
+                line-height: 1.4;
+            }
+            
+            .about-modal-body .ceo-section {
+                margin-bottom: 2rem;
             }
             
             .about-modal-body .ceo-section h4 {
-                font-size: 1.375rem;
+                font-size: 1.1875rem;
+                margin-bottom: 1rem;
             }
             
             .about-modal-body .ceo-section p {
-                font-size: 0.9rem;
+                font-size: 0.875rem;
+                line-height: 1.7;
+                margin-bottom: 1rem;
+            }
+            
+            .about-modal-body .career-timeline {
+                margin-top: 1.25rem;
             }
             
             .about-modal-body .career-item {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
+                gap: 0.5rem;
+                margin-bottom: 1.25rem;
+                padding-bottom: 1.25rem;
+            }
+            
+            .about-modal-body .career-item:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
             }
             
             .about-modal-body .career-year {
-                font-size: 1.5rem;
+                font-size: 1.1875rem;
             }
             
             .about-modal-body .career-details h5 {
-                font-size: 1rem;
+                font-size: 0.9375rem;
+                margin-bottom: 0.25rem;
+            }
+            
+            .about-modal-body .career-details p {
+                font-size: 0.78125rem;
+                line-height: 1.55;
             }
         }
     </style>
@@ -1573,21 +1724,21 @@
                                     <div class="career-year">2015</div>
                                     <div class="career-details">
                                         <h5>トヨタ自動車株式会社 入社</h5>
-                                        <p>法人向け共創協業事業の立ち上げや、新規事業の立ち上げ、国内市場の中長期企画など幅広い業務に従事。</p>
+                                        <p>法人向け共創事業や新規事業の立ち上げ、国内市場の中長期企画に従事。</p>
                                     </div>
                                 </div>
                                 <div class="career-item">
                                     <div class="career-year">2024</div>
                                     <div class="career-details">
-                                        <h5>合同会社Limot 参画</h5>
-                                        <p>立ち上げメンバーとして、モビリティサービス事業に参画。</p>
+                                        <h5>モビリティ事業立ち上げ</h5>
+                                        <p>立ち上げメンバーとしてモビリティサービス事業に参画。</p>
                                     </div>
                                 </div>
                                 <div class="career-item">
                                     <div class="career-year">2025</div>
                                     <div class="career-details">
                                         <h5>Ark inc. 設立 / 代表取締役</h5>
-                                        <p>さらなる事業拡大に向け、Ark inc.を設立。経験と情熱を次世代へ繋ぐ事業を展開。</p>
+                                        <p>経験と情熱を次世代へ繋ぐ事業を展開。</p>
                                     </div>
                                 </div>
                             </div>
