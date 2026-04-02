@@ -6,7 +6,7 @@
     <title>ARK inc. — 経験を次世代へ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --color-bg-dark: #0a0d14;
@@ -19,8 +19,8 @@
             --color-gold-dark: #b8954e;
             --color-border: #1a1d28;
             
-            --font-display: 'Cinzel', serif;
-            --font-body: 'Lato', 'Noto Sans JP', sans-serif;
+            --font-display: 'Outfit', 'Noto Sans JP', sans-serif;
+            --font-body: 'Inter', 'Noto Sans JP', sans-serif;
             
             --section-padding: clamp(5rem, 12vh, 10rem);
             --max-width: 1400px;
@@ -46,6 +46,8 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: -0.01em;
         }
         
         h1, h2, h3, h4, h5, h6 {
@@ -81,9 +83,9 @@
         }
         
         .logo-text {
-            font-family: var(--font-display);
+            font-family: 'Cinzel', serif;
             font-size: 1.375rem;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 0.08em;
             color: var(--color-gold);
         }
@@ -204,7 +206,7 @@
         
         .hero-title {
             font-size: clamp(2rem, 7vw, 4.5rem);
-            font-weight: 700;
+            font-weight: 500;
             margin-bottom: 2rem;
             letter-spacing: -0.02em;
             line-height: 1.1;
@@ -224,7 +226,8 @@
             line-height: 1.8;
             color: var(--color-text-secondary);
             max-width: 700px;
-            margin-bottom: 3rem;
+            margin: 0 auto 3rem;
+            text-align: center;
             opacity: 0;
             animation: fadeInUp 1s var(--ease) 0.7s forwards;
         }
@@ -453,7 +456,7 @@
         
         .service-title {
             font-size: 1.125rem;
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 1rem;
             color: var(--color-text-primary);
         }
@@ -829,9 +832,9 @@
         }
         
         .footer-logo {
-            font-family: var(--font-display);
+            font-family: 'Cinzel', serif;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: 0.08em;
             margin-bottom: 1.5rem;
             color: var(--color-gold);
@@ -1501,7 +1504,7 @@
     <section class="message" id="message">
         <div class="section-header">
             <div class="section-label">Message</div>
-            <h2 class="section-title">唯一無二の経験を、<br>財産に。</h2>
+            <h2 class="section-title">唯一無二の経験を、財産に。</h2>
         </div>
         <div class="message-content">
             <p class="message-text">
@@ -1527,7 +1530,7 @@
     <section class="services" id="services">
         <div class="section-header">
             <div class="section-label">Services</div>
-            <h2 class="section-title">総合コンサルティングで<br>未来を支える</h2>
+            <h2 class="section-title">総合コンサルティングで未来を支える</h2>
         </div>
         <div class="services-grid">
             <div class="service-card" data-service="consulting">
