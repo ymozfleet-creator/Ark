@@ -127,16 +127,22 @@
         .mobile-toggle {
             display: none;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
             cursor: pointer;
             padding: 0.5rem;
+            transition: all 0.3s var(--ease);
+        }
+        
+        .mobile-toggle:hover {
+            opacity: 0.7;
         }
         
         .mobile-toggle span {
-            width: 26px;
-            height: 2px;
-            background: var(--color-gold);
+            width: 24px;
+            height: 1.5px;
+            background: var(--color-text-primary);
             transition: all 0.3s var(--ease);
+            border-radius: 2px;
         }
         
         /* Hero */
@@ -205,6 +211,8 @@
             color: var(--color-text-primary);
             opacity: 0;
             animation: fadeInUp 1s var(--ease) 0.5s forwards;
+            text-align: center;
+            white-space: nowrap;
         }
         
         .hero-title .accent {
@@ -900,23 +908,23 @@
         }
         
         .modal-title {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             color: var(--color-text-primary);
         }
         
         .modal-description {
-            font-size: 1.125rem;
-            line-height: 2;
+            font-size: 1rem;
+            line-height: 1.8;
             color: var(--color-text-secondary);
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
         
         .modal-details h4 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             color: var(--color-gold);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             font-weight: 600;
         }
         
@@ -926,10 +934,11 @@
         }
         
         .modal-details li {
-            padding: 1rem 0;
+            padding: 0.875rem 0;
             border-bottom: 1px solid var(--color-border);
             color: var(--color-text-secondary);
-            line-height: 1.8;
+            line-height: 1.7;
+            font-size: 0.9375rem;
         }
         
         .modal-details li::before {
@@ -1115,9 +1124,11 @@
             }
             
             .hero-title {
-                font-size: clamp(1.5rem, 8vw, 3rem);
+                font-size: clamp(1.1rem, 5.5vw, 3rem);
                 line-height: 1.2;
                 margin-bottom: 2rem;
+                text-align: center;
+                white-space: nowrap;
             }
             
             .hero-description {
@@ -1303,25 +1314,30 @@
             }
             
             .modal-content {
-                padding: 3rem 2rem;
+                padding: 2.5rem 1.75rem;
                 max-height: 85vh;
             }
             
             .modal-title {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
+                margin-bottom: 1.25rem;
             }
             
             .modal-description {
-                font-size: 1rem;
-                line-height: 1.85;
+                font-size: 0.9375rem;
+                line-height: 1.75;
+                margin-bottom: 2rem;
             }
             
             .modal-details h4 {
-                font-size: 1.25rem;
+                font-size: 1.125rem;
+                margin-bottom: 1rem;
             }
             
             .modal-details li {
-                font-size: 0.95rem;
+                font-size: 0.875rem;
+                padding: 0.75rem 0;
+            }
                 line-height: 1.7;
             }
             
