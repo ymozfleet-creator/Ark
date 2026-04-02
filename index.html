@@ -930,6 +930,18 @@
             margin-right: 0.5rem;
         }
         
+        /* About Modal */
+        .about-modal-content {
+            max-width: 1200px;
+            width: 95%;
+            max-height: 90vh;
+            padding: 3rem;
+        }
+        
+        .about-modal-body .ceo-profile {
+            margin-top: 3rem;
+        }
+        
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -1195,6 +1207,56 @@
                 font-size: 0.95rem;
                 line-height: 1.7;
             }
+            
+            .about-modal-content {
+                padding: 2rem 1.5rem;
+                width: 95%;
+                max-height: 90vh;
+            }
+            
+            .about-modal-body .ceo-profile {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .about-modal-body .ceo-image {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .about-modal-body .ceo-info h3 {
+                font-size: 1.75rem;
+            }
+            
+            .about-modal-body .ceo-motto {
+                padding: 1.5rem;
+            }
+            
+            .about-modal-body .ceo-motto-text {
+                font-size: 1.125rem;
+            }
+            
+            .about-modal-body .ceo-section h4 {
+                font-size: 1.375rem;
+            }
+            
+            .about-modal-body .ceo-section p {
+                font-size: 0.9rem;
+            }
+            
+            .about-modal-body .career-item {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .about-modal-body .career-year {
+                font-size: 1.5rem;
+            }
+            
+            .about-modal-body .career-details h5 {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -1443,71 +1505,6 @@
         </div>
     </section>
 
-    <section class="about" id="about">
-        <div class="section-header">
-            <div class="section-label">About</div>
-            <h2 class="section-title">代表メッセージ</h2>
-        </div>
-        <div class="ceo-profile">
-            <div class="ceo-image">Photo Coming Soon</div>
-            <div class="ceo-info">
-                <h3>茂住 雄太</h3>
-                <p class="ceo-title">代表取締役 / Representative Director</p>
-                
-                <div class="ceo-motto">
-                    <div class="ceo-motto-label">座右の銘</div>
-                    <div class="ceo-motto-text">「本気の失敗には、価値がある。」</div>
-                </div>
-                
-                <div class="ceo-section">
-                    <h4>Vision — ビジョン</h4>
-                    <p>
-                        私がトヨタで目の当たりにしたのは、長年現場で培われた知恵が、次の世代にきちんと渡されたとき、組織が劇的に変わるという事実でした。
-                    </p>
-                    <p>
-                        経験は、持っているだけでは眠り続ける。でも、誰かに渡された瞬間、それは生きたチカラに変わる。その確信が、Ark inc.を立ち上げた原点です。
-                    </p>
-                    <p>
-                        肩書きや規模に関係なく、あなたが全力で歩んできた道には、必ず次の誰かの道を照らすチカラが宿っている。その継承を、もっと当たり前にしていきたい。それが私の使命です。
-                    </p>
-                </div>
-                
-                <div class="ceo-section">
-                    <h4>Career — 経歴</h4>
-                    <div class="career-timeline">
-                        <div class="career-item">
-                            <div class="career-year">2015</div>
-                            <div class="career-details">
-                                <h5>立教大学 卒業</h5>
-                            </div>
-                        </div>
-                        <div class="career-item">
-                            <div class="career-year">2015</div>
-                            <div class="career-details">
-                                <h5>トヨタ自動車株式会社 入社</h5>
-                                <p>法人向け共創協業事業の立ち上げや、新規事業の立ち上げ、国内市場の中長期企画など幅広い業務に従事。</p>
-                            </div>
-                        </div>
-                        <div class="career-item">
-                            <div class="career-year">2024</div>
-                            <div class="career-details">
-                                <h5>合同会社Limot 参画</h5>
-                                <p>立ち上げメンバーとして、モビリティサービス事業に参画。</p>
-                            </div>
-                        </div>
-                        <div class="career-item">
-                            <div class="career-year">2025</div>
-                            <div class="career-details">
-                                <h5>Ark inc. 設立 / 代表取締役</h5>
-                                <p>さらなる事業拡大に向け、Ark inc.を設立。経験と情熱を次世代へ繋ぐ事業を展開。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="contact" id="contact">
         <div class="section-header">
             <div class="section-label">Contact</div>
@@ -1527,6 +1524,77 @@
         <div class="modal-content">
             <button class="modal-close" onclick="closeServiceModal()">×</button>
             <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content about-modal-content">
+            <button class="modal-close" onclick="closeAboutModal()">×</button>
+            <div class="about-modal-body">
+                <div class="section-header">
+                    <div class="section-label">About</div>
+                    <h2 class="section-title">代表メッセージ</h2>
+                </div>
+                <div class="ceo-profile">
+                    <div class="ceo-image">Photo Coming Soon</div>
+                    <div class="ceo-info">
+                        <h3>茂住 雄太</h3>
+                        <p class="ceo-title">代表取締役 / Representative Director</p>
+                        
+                        <div class="ceo-motto">
+                            <div class="ceo-motto-label">座右の銘</div>
+                            <div class="ceo-motto-text">「本気の失敗には、価値がある。」</div>
+                        </div>
+                        
+                        <div class="ceo-section">
+                            <h4>Vision — ビジョン</h4>
+                            <p>
+                                私がトヨタで目の当たりにしたのは、長年現場で培われた知恵が、次の世代にきちんと渡されたとき、組織が劇的に変わるという事実でした。
+                            </p>
+                            <p>
+                                経験は、持っているだけでは眠り続ける。でも、誰かに渡された瞬間、それは生きたチカラに変わる。その確信が、Ark inc.を立ち上げた原点です。
+                            </p>
+                            <p>
+                                肩書きや規模に関係なく、あなたが全力で歩んできた道には、必ず次の誰かの道を照らすチカラが宿っている。その継承を、もっと当たり前にしていきたい。それが私の使命です。
+                            </p>
+                        </div>
+                        
+                        <div class="ceo-section">
+                            <h4>Career — 経歴</h4>
+                            <div class="career-timeline">
+                                <div class="career-item">
+                                    <div class="career-year">2015</div>
+                                    <div class="career-details">
+                                        <h5>立教大学 卒業</h5>
+                                    </div>
+                                </div>
+                                <div class="career-item">
+                                    <div class="career-year">2015</div>
+                                    <div class="career-details">
+                                        <h5>トヨタ自動車株式会社 入社</h5>
+                                        <p>法人向け共創協業事業の立ち上げや、新規事業の立ち上げ、国内市場の中長期企画など幅広い業務に従事。</p>
+                                    </div>
+                                </div>
+                                <div class="career-item">
+                                    <div class="career-year">2024</div>
+                                    <div class="career-details">
+                                        <h5>合同会社Limot 参画</h5>
+                                        <p>立ち上げメンバーとして、モビリティサービス事業に参画。</p>
+                                    </div>
+                                </div>
+                                <div class="career-item">
+                                    <div class="career-year">2025</div>
+                                    <div class="career-details">
+                                        <h5>Ark inc. 設立 / 代表取締役</h5>
+                                        <p>さらなる事業拡大に向け、Ark inc.を設立。経験と情熱を次世代へ繋ぐ事業を展開。</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1611,6 +1679,35 @@
             modal.classList.remove('active');
             document.body.style.overflow = '';
         }
+        
+        // Open About modal
+        function openAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close About modal
+        function closeAboutModal() {
+            const modal = document.getElementById('aboutModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Add click handler to About link in navigation
+        document.querySelectorAll('a[href="#about"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                openAboutModal();
+            });
+        });
+        
+        // Close About modal when clicking outside
+        document.getElementById('aboutModal').addEventListener('click', (e) => {
+            if (e.target.id === 'aboutModal') {
+                closeAboutModal();
+            }
+        });
         
         // Add click handlers to service cards
         document.querySelectorAll('.service-card').forEach(card => {
