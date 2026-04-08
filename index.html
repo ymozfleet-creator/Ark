@@ -156,7 +156,7 @@
             position: relative;
             background: 
                 linear-gradient(rgba(8, 9, 14, 0.85), rgba(10, 13, 20, 0.9)),
-                url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80') center/cover no-repeat,
+                url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80') center center/cover no-repeat fixed,
                 radial-gradient(circle at 20% 80%, rgba(212, 175, 106, 0.03) 0%, transparent 40%),
                 radial-gradient(circle at 80% 20%, rgba(212, 175, 106, 0.05) 0%, transparent 50%),
                 linear-gradient(165deg, #08090e 0%, var(--color-bg-dark) 50%, #0d1018 100%);
@@ -1153,11 +1153,14 @@
                 top: 92px;
                 left: 0;
                 right: 0;
-                background: var(--color-surface);
+                background: rgba(10, 13, 20, 0.98);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
                 flex-direction: column;
                 gap: 0;
                 padding: 1.5rem;
-                border-bottom: 1px solid var(--color-border);
+                border-bottom: 1px solid var(--color-gold);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
                 transform: translateY(-100%);
                 opacity: 0;
                 pointer-events: none;
@@ -1172,15 +1175,22 @@
             
             .nav-links li {
                 padding: 1rem 0;
-                border-bottom: 1px solid var(--color-border);
+                border-bottom: 1px solid rgba(212, 175, 106, 0.2);
+            }
+            
+            .nav-links a {
+                color: var(--color-text-primary);
+                font-size: 1rem;
             }
             
             .hero {
                 padding: 5rem 1.5rem 3rem;
+                background-position: center center;
+                background-attachment: scroll;
             }
             
             .hero-title {
-                font-size: clamp(1rem, 5vw, 3rem);
+                font-size: clamp(1.15rem, 5.5vw, 3rem);
                 line-height: 1.3;
                 margin: 0 0 2rem 0;
                 text-align: center;
@@ -1220,8 +1230,9 @@
             }
             
             .section-title {
-                font-size: clamp(1.75rem, 8vw, 2.5rem);
-                line-height: 1.25;
+                font-size: clamp(1.3rem, 6vw, 2.5rem);
+                line-height: 1.3;
+                white-space: nowrap;
             }
             
             .message-text {
@@ -1468,6 +1479,10 @@
                 line-height: 1.65;
                 margin-bottom: 0.875rem;
                 word-break: break-word;
+            }
+            
+            .about-modal-body .ceo-section p br {
+                display: none;
             }
             
             .about-modal-body .career-timeline {
@@ -1839,7 +1854,7 @@
                                 <div class="career-item">
                                     <div class="career-year">2025</div>
                                     <div class="career-details">
-                                        <h5>ARK設立/代表</h5>
+                                        <h5>独立　ARK設立/代表</h5>
                                         <p>コンサルティング事業を中心に、多角的な展開を開始。</p>
                                     </div>
                                 </div>
