@@ -32,7 +32,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);font-weight:300;background:var(--bg0);color:var(--tx2);line-height:2;letter-spacing:.01em;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font-family:var(--sans);font-weight:300;background:var(--bg0);color:var(--tx2);line-height:2;letter-spacing:.01em;word-break:normal;word-break:auto-phrase;line-break:strict;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 h1,h2,h3{font-family:var(--mincho);color:var(--tx);font-weight:700;line-height:1.5;letter-spacing:.02em}
 a{color:inherit;text-decoration:none}img,svg{display:block}
 ::selection{background:var(--cu);color:#fff}
@@ -90,6 +90,7 @@ footer{padding:2.4rem 0;border-top:1px solid var(--line)}
 .fbar .cp{font-family:var(--mono);font-size:.66rem;color:var(--mut)}
 @media(max-width:860px){.p-main{grid-template-columns:1fr}.nav-links li:not(.keep){display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+br.wbr{display:inline}@media(max-width:640px){br.wbr{display:none}}
 </style>
 </head>
 <body>
@@ -121,7 +122,7 @@ footer{padding:2.4rem 0;border-top:1px solid var(--line)}
       <div class="motto"><div class="l">座右の銘 / Motto</div><p>本気の失敗には、価値がある。</p></div>
     </div>
     <div class="rv d1">
-      <p class="vis">私が信じているのは、一人ひとりの経験には、必ず誰かの未来を照らすチカラがあるということ。<br>RELIGHTは、その経験を次世代へ繋ぐ会社です。机上の正しさより、現場の手応えを。あなたの挑戦に、最後まで寄り添います。</p>
+      <p class="vis">私が信じているのは、一人ひとりの経験には、必ず誰かの未来を照らすチカラがあるということ。<br class="wbr">RELIGHTは、その経験を次世代へ繋ぐ会社です。机上の正しさより、現場の手応えを。あなたの挑戦に、最後まで寄り添います。</p>
       <div class="tl-l">Career</div>
       <div class="tl-row"><span class="yr">2015</span><span class="d"><b>立教大学 卒業 ／ トヨタ自動車 入社</b><span>法人共創事業・エネルギーマネジメント事業の立ち上げ、国内市場の中長期企画などに従事。</span></span></div>
       <div class="tl-row"><span class="yr">2024</span><span class="d"><b>モビリティ事業 立ち上げ</b><span>立ち上げメンバーとして、モビリティサービス事業へ。</span></span></div>
@@ -133,7 +134,7 @@ footer{padding:2.4rem 0;border-top:1px solid var(--line)}
 
 <section class="p-cta">
   <div class="wrap">
-    <h2>あなたの挑戦に、伴走します。</h2>
+    <h2>あなたの挑戦に、<br>伴走します。</h2>
     <div class="row">
       <a href="index.html#serv" class="btn ghost">事業内容を見る</a>
       <a href="index.html#contact" class="btn solid">お問い合わせ →</a>

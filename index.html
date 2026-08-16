@@ -93,7 +93,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);font-weight:300;background:var(--bg0);color:var(--tx2);line-height:2;letter-spacing:.01em;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--sans);font-weight:300;background:var(--bg0);color:var(--tx2);line-height:2;letter-spacing:.01em;word-break:normal;word-break:auto-phrase;line-break:strict;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 h1,h2,h3{font-family:var(--mincho);color:var(--tx);font-weight:700;line-height:1.5;letter-spacing:.03em}
 a{color:inherit;text-decoration:none}
 img,svg{display:block}
@@ -365,6 +365,7 @@ body{font-weight:400}
 .contact-card .copy-btn.done{background:#fff;color:var(--cu);border-color:#fff}
 .contact-card .mail-addr{color:#fff;border-bottom-color:rgba(255,255,255,.5)}
 .contact-card::after{background:radial-gradient(60% 80% at 100% 100%,rgba(255,255,255,.28),transparent 60%)}
+br.wbr{display:inline}@media(max-width:640px){br.wbr{display:none}}
 </style>
 </head>
 <body>
@@ -391,8 +392,8 @@ body{font-weight:400}
 <section class="hero" id="top">
   <svg class="flame-mark" viewBox="0 0 24 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 1C13 26 14.5 28 23 32C14.5 36 13 38 12 63C11 38 9.5 36 1 32C9.5 28 11 26 12 1Z" fill="#5b83f0"/></svg>
   <div class="beam" aria-hidden="true"></div>
-  <h1>経験と知恵を、<em>次世代へ繋ぐ</em>。</h1>
-  <p class="hero-sub">トヨタで培った現場改善のノウハウと、新規事業開発の経験で。<br>構想から実装・運営まで伴走し、あなたのビジネスを次のステージへ。</p>
+  <h1>経験と知恵を、<br><em>次世代へ繋ぐ</em>。</h1>
+  <p class="hero-sub">トヨタで培った現場改善のノウハウと、新規事業開発の経験で。<br class="wbr">構想から実装・運営まで伴走し、あなたのビジネスを次のステージへ。</p>
   <div class="hero-chips">
     <a href="#serv"><i>01</i>営業代行事業</a>
     <a href="#serv"><i>02</i>アプリ開発・運営事業</a>
@@ -410,7 +411,7 @@ body{font-weight:400}
   <div class="wrap">
     <div class="shead">
       <div><span class="lab rv">Services</span><h2 class="rv d1">事業内容</h2></div>
-      <p class="lead rv d2">お客様の未来を支える3つの事業。<br>構想だけで終わらせず、現場で成果が出るまで伴走します。</p>
+      <p class="lead rv d2">お客様の未来を支える3つの事業。<br class="wbr">構想だけで終わらせず、現場で成果が出るまで伴走します。</p>
     </div>
     <div class="svc-grid">
       <div class="svc rv">
@@ -418,7 +419,7 @@ body{font-weight:400}
         <h3>営業代行事業</h3>
         <span class="en">Sales Outsourcing</span>
         <p>営業戦略の設計（コンサルティング）から、実行・商談アポの獲得までを一気通貫で代行。「絵を描く」だけで終わらせず、現場で商談が生まれるところまで担います。</p>
-        <div class="foot"><div class="menu"><span>コンサルティング</span><span>営業戦略・設計</span></div><a href="consulting.html" class="more">顧問コンサルティング →</a><a href="https://ymozfleet-creator.github.io/tenji-hack/" target="_blank" rel="noopener" class="more">展示会ハック（アポ獲得代行） →</a></div>
+        <div class="foot"><div class="menu"><span>コンサルティング</span><span>営業戦略・設計</span></div><a href="consulting.html" class="more">コンサルティング →</a><a href="https://ymozfleet-creator.github.io/tenji-hack/" target="_blank" rel="noopener" class="more">展示会ハック（アポ獲得代行） →</a></div>
       </div>
       <div class="svc rv d1">
         <span class="no">02</span>
@@ -519,7 +520,7 @@ body{font-weight:400}
   <div class="wrap">
     <div class="shead">
       <div><span class="lab rv">Voice</span><h2 class="rv d1">お客様の声</h2></div>
-      <p class="lead rv d2">現場で即実践できる——<br>支援先の皆様からいただいた<span class="nb">声の一部です。</span></p>
+      <p class="lead rv d2">現場で即実践できる——<br class="wbr">支援先の皆様からいただいた<span class="nb">声の一部です。</span></p>
     </div>
     <div class="voice-grid">
       <div class="vcard rv">
